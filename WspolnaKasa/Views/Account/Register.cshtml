@@ -1,0 +1,25 @@
+﻿@model WspolnaKasa.Models.RegisterViewModel
+@{
+    ViewBag.Title = WspolnaKasa.App_GlobalResources.Translations.Account_Register_Title;
+    ViewBag.Register = WspolnaKasa.App_GlobalResources.Translations.Account_Register_Register;
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group col-md-10">
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "margin-bottom: 1px", placeholder = @Html.DisplayNameFor(m => m.Email) })
+        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", style = "margin-bottom: 1px", placeholder = @Html.DisplayNameFor(m => m.UserName) })
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control", style = "margin-bottom: 1px", placeholder = @Html.DisplayNameFor(m => m.Password) })
+        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.ConfirmPassword) })
+        <input type="submit" class="btn btn-default" value="@ViewBag.Register" style="margin-top: 3px;" />
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

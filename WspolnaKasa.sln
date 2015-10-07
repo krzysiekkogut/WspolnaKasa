@@ -1,0 +1,80 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WspolnaKasa", "WspolnaKasa\WspolnaKasa.csproj", "{7ADF1D95-D36F-4406-8043-E49BB8D8EDBD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{B768113A-6CA2-43FC-9357-160FC2C8EA14}"
+	ProjectSection(SolutionItems) = preProject
+		Documents\API.docx = Documents\API.docx
+		Documents\LPP 2015 - przykładowy spis treści.docx = Documents\LPP 2015 - przykładowy spis treści.docx
+		Documents\LPP Wspólna Kasa - pełna dokumentacja.pdf = Documents\LPP Wspólna Kasa - pełna dokumentacja.pdf
+		Documents\UML Diagrams.vpp = Documents\UML Diagrams.vpp
+		Documents\Wizja.docx = Documents\Wizja.docx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MigrationScripts", "MigrationScripts", "{B51FE77C-CFFD-4EAC-9B7E-53EEC7C71EFC}"
+	ProjectSection(SolutionItems) = preProject
+		MigrationScripts\201504112215363_Initial.sql = MigrationScripts\201504112215363_Initial.sql
+		MigrationScripts\201504271308420_GroupHasUniqueNameAndSecret.sql = MigrationScripts\201504271308420_GroupHasUniqueNameAndSecret.sql
+		MigrationScripts\201505101342021_ExpensesRestructured.sql = MigrationScripts\201505101342021_ExpensesRestructured.sql
+		MigrationScripts\201505101434034_ExpensesApplicationUserRelation.sql = MigrationScripts\201505101434034_ExpensesApplicationUserRelation.sql
+		MigrationScripts\201505101529073_UserAdded.sql = MigrationScripts\201505101529073_UserAdded.sql
+		MigrationScripts\201505101650374_TransferAdded.sql = MigrationScripts\201505101650374_TransferAdded.sql
+		MigrationScripts\201505111348172_ReturnToApplicationUser.sql = MigrationScripts\201505111348172_ReturnToApplicationUser.sql
+		MigrationScripts\201505111737552_BindTransferToGroup.sql = MigrationScripts\201505111737552_BindTransferToGroup.sql
+		MigrationScripts\201505121829592_DisplayNameForUser.sql = MigrationScripts\201505121829592_DisplayNameForUser.sql
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpensesDomain", "ExpensesDomain\ExpensesDomain.csproj", "{0F04B017-8629-4C28-8840-856B2DF14FD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpensesDomain.Tests", "ExpensesDomain.Tests\ExpensesDomain.Tests.csproj", "{02379BD5-8474-46F2-8788-4856A3B4DAF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{285E5EA6-6E92-455A-967E-CEB884F72C95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7ADF1D95-D36F-4406-8043-E49BB8D8EDBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ADF1D95-D36F-4406-8043-E49BB8D8EDBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ADF1D95-D36F-4406-8043-E49BB8D8EDBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ADF1D95-D36F-4406-8043-E49BB8D8EDBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F04B017-8629-4C28-8840-856B2DF14FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F04B017-8629-4C28-8840-856B2DF14FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F04B017-8629-4C28-8840-856B2DF14FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F04B017-8629-4C28-8840-856B2DF14FD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02379BD5-8474-46F2-8788-4856A3B4DAF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02379BD5-8474-46F2-8788-4856A3B4DAF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02379BD5-8474-46F2-8788-4856A3B4DAF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02379BD5-8474-46F2-8788-4856A3B4DAF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{285E5EA6-6E92-455A-967E-CEB884F72C95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{285E5EA6-6E92-455A-967E-CEB884F72C95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{285E5EA6-6E92-455A-967E-CEB884F72C95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{285E5EA6-6E92-455A-967E-CEB884F72C95}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://krzysiekkogut.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = WspolnaKasa\\WspolnaKasa.csproj
+		SccProjectName1 = WspolnaKasa
+		SccLocalPath1 = WspolnaKasa
+		SccProjectUniqueName2 = ExpensesDomain\\ExpensesDomain.csproj
+		SccProjectName2 = ExpensesDomain
+		SccLocalPath2 = ExpensesDomain
+		SccProjectUniqueName3 = ExpensesDomain.Tests\\ExpensesDomain.Tests.csproj
+		SccProjectName3 = ExpensesDomain.Tests
+		SccLocalPath3 = ExpensesDomain.Tests
+		SccProjectUniqueName4 = DataAccessLayer\\DataAccessLayer.csproj
+		SccProjectName4 = DataAccessLayer
+		SccLocalPath4 = DataAccessLayer
+	EndGlobalSection
+EndGlobal

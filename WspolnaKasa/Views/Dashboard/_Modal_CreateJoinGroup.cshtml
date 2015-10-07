@@ -1,0 +1,32 @@
+﻿@model WspolnaKasa.Models.Dashboard.CreateJoinGroupViewModel
+
+@{
+    ViewBag.ModalCreateJoinGroup_Title = WspolnaKasa.App_GlobalResources.Translations.Dashboard_CreateJoinGroup;
+    ViewBag.ModalCreateJoinGroup_CreateBtn = WspolnaKasa.App_GlobalResources.Translations.Dashboard_CreateButton;
+    ViewBag.ModalCreateJoinGroup_JoinBtn = WspolnaKasa.App_GlobalResources.Translations.Dashboard_JoinButton;
+}
+
+<div class="modal fade" id="createJoinGroup" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">@ViewBag.ModalCreateJoinGroup_Title.</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("CreateJoinGroup", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="form-group">
+                        @Html.AntiForgeryToken()
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", style = "margin-bottom: 1px", placeholder = @Html.DisplayNameFor(m => m.Name) })
+                        @Html.PasswordFor(m => m.Secret, new { @class = "form-control", style = "margin-bottom: 1px", placeholder = @Html.DisplayNameFor(m => m.Secret) })
+                    </div>
+                    <div style="text-align:right">
+                        <button type="submit" class="btn btn-primary btn-sm" name="CreateOrJoin" value="Join">@ViewBag.ModalCreateJoinGroup_JoinBtn</button>
+                        <button type="submit" class="btn btn-primary btn-sm" name="CreateOrJoin" value="Create">@ViewBag.ModalCreateJoinGroup_CreateBtn</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

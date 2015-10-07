@@ -1,0 +1,42 @@
+﻿@using WspolnaKasa.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = WspolnaKasa.App_GlobalResources.Translations.Account_Login_Title;
+    ViewBag.Login = WspolnaKasa.App_GlobalResources.Translations.Account_Login_Login;
+    ViewBag.ForgotPasswordLink = WspolnaKasa.App_GlobalResources.Translations.Account_Login_ForgotPasswordLink;
+}
+
+<h2>@ViewBag.Title.</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <section id="socialLoginForm">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+        </section>
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group col-md-12">
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", style = "margin-bottom: 1px", placeholder = @Html.DisplayNameFor(m => m.Email) })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.Password) })
+                    <input type="submit" value="@ViewBag.Login" class="btn btn-default" style="margin-top:3px;" />
+                </div>
+                <div class="form-group col-md-12">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.DisplayNameFor(m => m.RememberMe)
+                </div>
+                <div class="form-group col-md-12">
+                    <a href="@Url.Action("ForgotPassword")">@ViewBag.ForgotPasswordLink</a>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

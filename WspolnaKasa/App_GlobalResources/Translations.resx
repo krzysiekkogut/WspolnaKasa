@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccountViewModels_Password" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="AccountViewModels_RememberMe" xml:space="preserve">
+    <value>Nie wylogowuj mnie.</value>
+  </data>
+  <data name="Account_ConfirmEmail_LinkText" xml:space="preserve">
+    <value>zalogować</value>
+  </data>
+  <data name="Account_ConfirmEmail_Text" xml:space="preserve">
+    <value>Dziękujemy za potwierdzenie adresu e-mail. Teraz możesz się</value>
+  </data>
+  <data name="Account_ConfirmEmail_Title" xml:space="preserve">
+    <value>Adres e-mail został potwierdzony</value>
+  </data>
+  <data name="Account_ExternalLoginConfirmation_RegisterLink" xml:space="preserve">
+    <value>Zarejestruj</value>
+  </data>
+  <data name="Account_ExternalLoginConfirmation_Text" xml:space="preserve">
+    <value>Pomyślnie zalogowano używając Twojego konta &lt;strong&gt;{0}&lt;/strong&gt;. Proszę podaj swój adres e-mail i kliknij przycisk {1}.</value>
+  </data>
+  <data name="Account_ExternalLoginConfirmation_Title" xml:space="preserve">
+    <value>Zarejestruj się</value>
+  </data>
+  <data name="Account_ExternalLoginFailure_Text" xml:space="preserve">
+    <value>Logowanie za pomocą zewnętrznejgo serwisu nie powiodło się.</value>
+  </data>
+  <data name="Account_ExternalLoginFailure_Title" xml:space="preserve">
+    <value>Logowanie nieudane</value>
+  </data>
+  <data name="Account_ExternalLoginsListPartial_LoginUsing" xml:space="preserve">
+    <value>Zaloguj przez</value>
+  </data>
+  <data name="Account_ForgotPasswordConfirmation_Text" xml:space="preserve">
+    <value>Na podany adres e-mail została wysłana wiadomość. Jeśli wiadomość nie przyszła w ciągu kilku minut, spróbuj pomownie. Sprawdź także folder spam.</value>
+  </data>
+  <data name="Account_ForgotPasswordConfirmation_Title" xml:space="preserve">
+    <value>Zapomniałeś hasła?</value>
+  </data>
+  <data name="Account_ForgotPassword_Continue" xml:space="preserve">
+    <value>Kontynuuj</value>
+  </data>
+  <data name="Account_ForgotPassword_Email" xml:space="preserve">
+    <value>Wprowadź adres e-mail.</value>
+  </data>
+  <data name="Account_ForgotPassword_Title" xml:space="preserve">
+    <value>Zapomniałeś hasła?</value>
+  </data>
+  <data name="Account_Login_ForgotPasswordLink" xml:space="preserve">
+    <value>Zapomniałeś hasła?</value>
+  </data>
+  <data name="Account_Login_InvalidLoginAttempt" xml:space="preserve">
+    <value>Błąd logowania. Upewnij się, że wprowadziłeś prawidłowe hasło.</value>
+  </data>
+  <data name="Account_Login_Login" xml:space="preserve">
+    <value>Zaloguj</value>
+  </data>
+  <data name="Account_Login_Title" xml:space="preserve">
+    <value>Zaloguj się</value>
+  </data>
+  <data name="Account_Register_Register" xml:space="preserve">
+    <value>Zarejestruj</value>
+  </data>
+  <data name="Account_Register_Title" xml:space="preserve">
+    <value>Zarejestruj się</value>
+  </data>
+  <data name="Account_ResetPasswordConfirmation_LinkText" xml:space="preserve">
+    <value>zalogować</value>
+  </data>
+  <data name="Account_ResetPasswordConfirmation_Text" xml:space="preserve">
+    <value>Twoje hasło zostało zmienione. Teraz możesz się</value>
+  </data>
+  <data name="Account_ResetPasswordConfirmation_Title" xml:space="preserve">
+    <value>Hasło zostało zmienione</value>
+  </data>
+  <data name="Account_ResetPassword_Title" xml:space="preserve">
+    <value>Ustaw nowe hasło</value>
+  </data>
+  <data name="ActivationMail_Body" xml:space="preserve">
+    <value>Witamy,&lt;br/&gt;&lt;br /&gt;Proszę &lt;a href="{0}"&gt;kliknij tutaj&lt;/a&gt;, by potwierdzić swój adres e-mail w serwisie &lt;a href="https://wspolnakasa.azurewebsites.net"&gt;Wspólna Kasa&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Jeśli to nie Ty dokonałeś rejestracji, zignoruj tę wiadomość.&lt;br/&gt;&lt;br /&gt;Pozdrawiamy!</value>
+  </data>
+  <data name="ActivationMail_Subject" xml:space="preserve">
+    <value>Potwierdź swój profil</value>
+  </data>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>Wspólna Kasa</value>
+  </data>
+  <data name="Dasgboard_Summary_Total" xml:space="preserve">
+    <value>Razem</value>
+  </data>
+  <data name="Dashboard_AddExpense" xml:space="preserve">
+    <value>Dodaj wydatek</value>
+  </data>
+  <data name="Dashboard_AddTransfer" xml:space="preserve">
+    <value>Wprowadź przelew</value>
+  </data>
+  <data name="Dashboard_Amount" xml:space="preserve">
+    <value>Kwota</value>
+  </data>
+  <data name="Dashboard_AmountRequired" xml:space="preserve">
+    <value>Kwota jest wymagana.</value>
+  </data>
+  <data name="Dashboard_AtLeastOneParticipant" xml:space="preserve">
+    <value>Przynajmniej jedna osoba musi zostać wybrana.</value>
+  </data>
+  <data name="Dashboard_CannotEditOthersExpenses" xml:space="preserve">
+    <value>Nie można edytować wydatków innych użytkowników.</value>
+  </data>
+  <data name="Dashboard_CannotRemoveOthersExpenses" xml:space="preserve">
+    <value>Nie można usuwać wydatków innych użytkowników.</value>
+  </data>
+  <data name="Dashboard_CreateButton" xml:space="preserve">
+    <value>Utwórz</value>
+  </data>
+  <data name="Dashboard_CreateJoinGroup" xml:space="preserve">
+    <value>Stwórz nową lub dołącz do istniejącej grupy</value>
+  </data>
+  <data name="Dashboard_Date" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Dashboard_DateRequired" xml:space="preserve">
+    <value>Data jest wymagana.</value>
+  </data>
+  <data name="Dashboard_Description" xml:space="preserve">
+    <value>Opis</value>
+  </data>
+  <data name="Dashboard_DescriptionRequired" xml:space="preserve">
+    <value>Opis jest wymagany.</value>
+  </data>
+  <data name="Dashboard_EditExpense" xml:space="preserve">
+    <value>Edytuj wydatek</value>
+  </data>
+  <data name="Dashboard_EditGroup" xml:space="preserve">
+    <value>Edytuj grupę</value>
+  </data>
+  <data name="Dashboard_Group" xml:space="preserve">
+    <value>Grupa</value>
+  </data>
+  <data name="Dashboard_GroupAlreadyExists" xml:space="preserve">
+    <value>Groupa o podanej nazwie już istnieje.</value>
+  </data>
+  <data name="Dashboard_GroupDoesNotExist" xml:space="preserve">
+    <value>Groupa o podanej nazwie nie istnieje.</value>
+  </data>
+  <data name="Dashboard_GroupName" xml:space="preserve">
+    <value>Nazwa grupy</value>
+  </data>
+  <data name="Dashboard_GroupNameRequired" xml:space="preserve">
+    <value>Nazwa grupy jest wymagana.</value>
+  </data>
+  <data name="Dashboard_GroupRequired" xml:space="preserve">
+    <value>Wybór grupy jest wymagany.</value>
+  </data>
+  <data name="Dashboard_GroupSecret" xml:space="preserve">
+    <value>Hasło grupy</value>
+  </data>
+  <data name="Dashboard_GroupSecretRequired" xml:space="preserve">
+    <value>Hasło grupy jest wymagane.</value>
+  </data>
+  <data name="Dashboard_GroupSelect" xml:space="preserve">
+    <value>Wybierz grupę...</value>
+  </data>
+  <data name="Dashboard_IncorrectGroupSecret" xml:space="preserve">
+    <value>Niepoprawne hasło grupy.</value>
+  </data>
+  <data name="Dashboard_Index_Expenses" xml:space="preserve">
+    <value>Wydatki</value>
+  </data>
+  <data name="Dashboard_Index_News" xml:space="preserve">
+    <value>Aktualności</value>
+  </data>
+  <data name="Dashboard_Index_Title" xml:space="preserve">
+    <value>Kokpit</value>
+  </data>
+  <data name="Dashboard_Index_Transfers" xml:space="preserve">
+    <value>Przelewy</value>
+  </data>
+  <data name="Dashboard_JoinButton" xml:space="preserve">
+    <value>Dołącz</value>
+  </data>
+  <data name="Dashboard_ModalAddExpense_GroupMembers" xml:space="preserve">
+    <value>Członkowie grupy</value>
+  </data>
+  <data name="Dashboard_NewGroupName" xml:space="preserve">
+    <value>Nowa nazwa</value>
+  </data>
+  <data name="Dashboard_People" xml:space="preserve">
+    <value>Ludzie</value>
+  </data>
+  <data name="Dashboard_Person" xml:space="preserve">
+    <value>Osoba</value>
+  </data>
+  <data name="Dashboard_PersonFrom" xml:space="preserve">
+    <value>Od kogo</value>
+  </data>
+  <data name="Dashboard_PersonTo" xml:space="preserve">
+    <value>Do kogo</value>
+  </data>
+  <data name="Dashboard_PositiveAmount" xml:space="preserve">
+    <value>Kwota musi być dodatnia.</value>
+  </data>
+  <data name="Dashboard_Remove" xml:space="preserve">
+    <value>Usuń</value>
+  </data>
+  <data name="Dashboard_RemoveExpense" xml:space="preserve">
+    <value>Usuń wydatek</value>
+  </data>
+  <data name="Dashboard_RemoveExpenseConfirmationText" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć transakcję?</value>
+  </data>
+  <data name="Dashboard_RemoveGroup" xml:space="preserve">
+    <value>Usuń grupę</value>
+  </data>
+  <data name="Dashboard_RemoveGroupConfirmationText" xml:space="preserve">
+    <value>Czy na pewno chcesz usunąć grupę? Usuniętę zostaną wszystkie wydatki i przelewy.</value>
+  </data>
+  <data name="Dashboard_SaveChanges" xml:space="preserve">
+    <value>Zapisz zmiany</value>
+  </data>
+  <data name="Dashboard_TransferTitle" xml:space="preserve">
+    <value>Tytuł</value>
+  </data>
+  <data name="ForgotPasswordEmail_Body" xml:space="preserve">
+    <value>Witamy,&lt;br /&gt;&lt;br /&gt;Proszę &lt;a href="{0}"&gt;kliknij tutaj&lt;/a&gt;, by zmienić swoje hasło w serwisie &lt;a href="https://wspolnakasa.azurewebsites.net"&gt;Wspólna Kasa&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Jeśli to nie Ty poprosiłeś o zmianę hasła, zignoruj tę wiadomość.&lt;br /&gt;&lt;br /&gt;Pozdrawiamy!</value>
+  </data>
+  <data name="ForgotPasswordEmail_Subject" xml:space="preserve">
+    <value>Zmiana hasła</value>
+  </data>
+  <data name="Home_Index_GetStarted" xml:space="preserve">
+    <value>Przejdź do kokpitu</value>
+  </data>
+  <data name="Home_Index_History" xml:space="preserve">
+    <value>Prowadź historię wydatków</value>
+  </data>
+  <data name="Home_Index_HistoryText" xml:space="preserve">
+    <value>Nie wiesz na co uciekła kasa? Po prostu zerknij w historię swojej grupy.</value>
+  </data>
+  <data name="Home_Index_InviteFriends" xml:space="preserve">
+    <value>Zapraszaj znajomych</value>
+  </data>
+  <data name="Home_Index_InviteFriendsText" xml:space="preserve">
+    <value>Ciężko rozliczać wspólne wydatki samemu. Zaproś znajomych!</value>
+  </data>
+  <data name="Home_Index_Lead" xml:space="preserve">
+    <value>Rozliczaj wspólne wydatki ze znajomymi. Szybko i łatwo. Bez żadnych nieporozumień.</value>
+  </data>
+  <data name="Home_Index_Split" xml:space="preserve">
+    <value>Rozliczaj</value>
+  </data>
+  <data name="Home_Index_SplitText" xml:space="preserve">
+    <value>Wpisuj na bieżąco wspólne wydatki i bądź na bieżąco. Bez zaskoczeń, kto ile komu wisi.</value>
+  </data>
+  <data name="ManageViewModels_CurrentPassword" xml:space="preserve">
+    <value>Bieżące hasło</value>
+  </data>
+  <data name="ManageViewModels_NewPassword" xml:space="preserve">
+    <value>Nowe hasło</value>
+  </data>
+  <data name="Manage_ChangePassword_Button" xml:space="preserve">
+    <value>Zmień</value>
+  </data>
+  <data name="Manage_ChangePassword_Title" xml:space="preserve">
+    <value>Zmień hasło</value>
+  </data>
+  <data name="Manage_Index_Change" xml:space="preserve">
+    <value>Zmień</value>
+  </data>
+  <data name="Manage_Index_ChangePassword" xml:space="preserve">
+    <value>Zmień hasło</value>
+  </data>
+  <data name="Manage_Index_DisplayName" xml:space="preserve">
+    <value>Imię i nazwisko</value>
+  </data>
+  <data name="Manage_Index_ExternalLogin" xml:space="preserve">
+    <value>Powiązane konta</value>
+  </data>
+  <data name="Manage_Index_ManageExternalLogins" xml:space="preserve">
+    <value>Zarządzaj</value>
+  </data>
+  <data name="Manage_Index_MessageChangePasswordSuccess" xml:space="preserve">
+    <value>Haslo zostało zmienione.</value>
+  </data>
+  <data name="Manage_Index_MessageError" xml:space="preserve">
+    <value>Wystąpił błąd.</value>
+  </data>
+  <data name="Manage_Index_MessageSetPasswordSuccess" xml:space="preserve">
+    <value>Hasło zostało ustawione.</value>
+  </data>
+  <data name="Manage_Index_Password" xml:space="preserve">
+    <value>Hasło</value>
+  </data>
+  <data name="Manage_Index_SetPassword" xml:space="preserve">
+    <value>Ustaw hasło</value>
+  </data>
+  <data name="Manage_Index_Title" xml:space="preserve">
+    <value>Ustawienia profilu</value>
+  </data>
+  <data name="Manage_ManageLogins_Connect" xml:space="preserve">
+    <value>Połącz</value>
+  </data>
+  <data name="Manage_ManageLogins_RemoveLink" xml:space="preserve">
+    <value>Rozłącz</value>
+  </data>
+  <data name="Manage_ManageLogins_Title" xml:space="preserve">
+    <value>Powiązane konta</value>
+  </data>
+  <data name="Manage_SetPassword_Text" xml:space="preserve">
+    <value>Ustaw hasło, żeby nie musieć korzystać z logowania przez Facebooka.</value>
+  </data>
+  <data name="Manage_SetPassword_Title" xml:space="preserve">
+    <value>Ustaw hasło</value>
+  </data>
+  <data name="SetPassword_Button" xml:space="preserve">
+    <value>Ustaw</value>
+  </data>
+  <data name="Shared_Error_Text" xml:space="preserve">
+    <value>Podczas przetwarzania żądania wystąpił błąd. Proszę spróbować ponownie lub wysłać e-mail z opisem problemu na &lt;a href="mailto:kontakt@wspolnakasa.pl"&gt;kontakt@wspolnakasa.pl&lt;/a&gt;.</value>
+  </data>
+  <data name="Shared_Error_Title" xml:space="preserve">
+    <value>Wystapił błąd</value>
+  </data>
+  <data name="Shared_Lockout_Text" xml:space="preserve">
+    <value>Konto zostało zablokowane, proszę spróbować później.</value>
+  </data>
+  <data name="Shared_Lockout_Title" xml:space="preserve">
+    <value>Konto zablokowane</value>
+  </data>
+  <data name="Shared_LoginPartial_LogOffButton" xml:space="preserve">
+    <value>Wyloguj</value>
+  </data>
+  <data name="ViewModels_Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="ViewModels_EmailRequired" xml:space="preserve">
+    <value>E-mail jest wymagany.</value>
+  </data>
+  <data name="ViewModels_InvalidEmail" xml:space="preserve">
+    <value>Podany adres e-mail jest niepoprawny.</value>
+  </data>
+  <data name="ViewModels_PasswordConfirm" xml:space="preserve">
+    <value>Potwierdź hasło</value>
+  </data>
+  <data name="ViewModels_PasswordMinimumLength" xml:space="preserve">
+    <value>Hasło musi mieć co najmniej 6 znaków.</value>
+  </data>
+  <data name="ViewModels_PasswordRequired" xml:space="preserve">
+    <value>Hasło jest wymagane.</value>
+  </data>
+  <data name="ViewModels_PasswordsNotMatching" xml:space="preserve">
+    <value>Podane hasła nie zgadzają się.</value>
+  </data>
+</root>

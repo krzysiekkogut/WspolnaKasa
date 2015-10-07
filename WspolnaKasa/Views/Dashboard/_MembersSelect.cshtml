@@ -1,0 +1,12 @@
+﻿@model IEnumerable<WspolnaKasa.Models.Dashboard.Group.GroupMemberViewModel>
+@foreach (var member in Model)
+{
+    if (member.Selected)
+    {
+        <option value="@member.Id" selected>@member.Name</option>
+    }
+    else
+    {
+        <option value="@member.Id">@member.Name</option>
+    }
+}

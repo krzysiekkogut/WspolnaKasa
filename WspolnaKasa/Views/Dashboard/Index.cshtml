@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = WspolnaKasa.App_GlobalResources.Translations.Dashboard_Index_Title;
+    ViewBag.News = WspolnaKasa.App_GlobalResources.Translations.Dashboard_Index_News;
+    ViewBag.Expenses = WspolnaKasa.App_GlobalResources.Translations.Dashboard_Index_Expenses;
+    ViewBag.Transfers = WspolnaKasa.App_GlobalResources.Translations.Dashboard_Index_Transfers;
+}
+
+<script src="~/Scripts/Views/dashboard-1.0.0.1.js"></script>
+
+<div class="dashboard-container">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-dismissible alert-danger">
+            <button class="close" type="button" data-dismiss="alert">&times;</button>
+            @Html.ValidationSummary()
+        </div>
+    }
+    <div class="col-lg-4">
+        <div id="groupsSidebarContainer">
+            @Html.Action("_GroupsSidebar")
+        </div>
+        <div id="summaryContainer">
+            @Html.Action("_SummarySidebar")
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <h4>@ViewBag.News</h4>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#expensesContainer" data-toggle="tab">@ViewBag.Expenses</a></li>
+            <li><a href="#transfersContainer" data-toggle="tab">@ViewBag.Transfers</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="expensesContainer" class="tab-pane fade active in">
+                @Html.Action("_Expenses")
+            </div>
+            <div id="transfersContainer" class="tab-pane fade">
+                @Html.Action("_Transfers")
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_Modal_CreateJoinGroup")
+@Html.Partial("_Modal_EditGroup")
+@Html.Partial("_Modal_RemoveGroup")
+
+@Html.Partial("_Modal_AddExpense")
+@Html.Partial("_Modal_EditExpense")
+@Html.Partial("_Modal_RemoveExpense")
+
+@Html.Partial("_Modal_AddTransfer")

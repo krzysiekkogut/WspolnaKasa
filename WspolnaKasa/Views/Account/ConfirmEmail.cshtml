@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = WspolnaKasa.App_GlobalResources.Translations.Account_ConfirmEmail_Title;
+    ViewBag.Text = WspolnaKasa.App_GlobalResources.Translations.Account_ConfirmEmail_Text;
+    ViewBag.LinkText = WspolnaKasa.App_GlobalResources.Translations.Account_ConfirmEmail_LinkText;
+}
+
+<h2>@ViewBag.Title.</h2>
+<div>
+    <p>
+        @ViewBag.Text <a id="loginLink" href="@Url.Action("Login", "Account", routeValues: null)">@ViewBag.LinkText</a>.
+    </p>
+</div>

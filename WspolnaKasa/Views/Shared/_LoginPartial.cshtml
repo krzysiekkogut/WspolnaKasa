@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.AccountButton = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_Title;
+    ViewBag.LogOffButton = WspolnaKasa.App_GlobalResources.Translations.Shared_LoginPartial_LogOffButton;
+    ViewBag.RegisterButton = WspolnaKasa.App_GlobalResources.Translations.Account_Register_Register;
+    ViewBag.LoginButton = WspolnaKasa.App_GlobalResources.Translations.Account_Login_Login;    
+}
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="@Url.Action("Index","Manage")">@ViewBag.AccountButton</a>
+        </li>
+        <li><a href="javascript:document.getElementById('logoutForm').submit()">@ViewBag.LogOffButton</a></li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="@Url.Action("Register","Account")" id="registerLink">@ViewBag.RegisterButton</a></li>
+        <li><a href="@Url.Action("Login","Account")" id="loginLink">@ViewBag.LoginButton</a></li>
+    </ul>
+}

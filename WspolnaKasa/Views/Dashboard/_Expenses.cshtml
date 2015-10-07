@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WspolnaKasa.Models.Dashboard.ExpenseViewModel>
+
+@{
+    ViewBag.Expense_AddExpense = WspolnaKasa.App_GlobalResources.Translations.Dashboard_AddExpense;
+    ViewBag.Expense_EditExpense = WspolnaKasa.App_GlobalResources.Translations.Dashboard_EditExpense;
+    ViewBag.Expense_RemoveExpense = WspolnaKasa.App_GlobalResources.Translations.Dashboard_RemoveExpense;
+    ViewBag.Expense_Group = WspolnaKasa.App_GlobalResources.Translations.Dashboard_Group;
+    ViewBag.Expense_Person = WspolnaKasa.App_GlobalResources.Translations.Dashboard_Person;
+    ViewBag.Expense_Description = WspolnaKasa.App_GlobalResources.Translations.Dashboard_Description;
+    ViewBag.Expense_Date = WspolnaKasa.App_GlobalResources.Translations.Dashboard_Date;
+    ViewBag.Expense_Amount = WspolnaKasa.App_GlobalResources.Translations.Dashboard_Amount;
+}
+
+<div class="col-lg-12">
+    <div style="margin-top:5px;">
+        <button id="btnAddExpense" class="btn btn-primary btn-sm" title="@ViewBag.Expense_AddExpense" data-toggle="modal" data-target="#addExpenseModal">
+            <span class="glyphicon glyphicon-plus" />
+        </button>
+        <button id="btnEditExpense" class="btn btn-primary btn-sm disabled" title="@ViewBag.Expense_EditExpense" data-toggle="modal" data-target="#editExpenseModal">
+            <span class="glyphicon glyphicon-edit" />
+        </button>
+        <button id="btnRemoveExpense" class="btn btn-primary btn-sm disabled" title="@ViewBag.Expense_RemoveExpense" data-toggle="modal" data-target="#removeExpenseModal">
+            <span class="glyphicon glyphicon-remove" />
+        </button>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>@ViewBag.Expense_Group</th>
+                <th>@ViewBag.Expense_Person</th>
+                <th>@ViewBag.Expense_Description</th>
+                <th>@ViewBag.Expense_Date</th>
+                <th class="text-right">@ViewBag.Expense_Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var expense in Model)
+            {
+                <tr>
+                    <td>
+                        <input class="editable" type="hidden" value="@expense.Editable.ToString()" />
+                        <input class="expenseId" type="hidden" value="@expense.ExpenseId" />
+                        <input class="groupId" type="hidden" value="@expense.GroupId" />
+                        @expense.Group
+                    </td>
+                    <td>@expense.User</td>
+                    <td class="description">@expense.Description</td>
+                    <td class="date">@expense.Date.ToShortDateString()</td>
+                    <td class="amount text-right">@string.Format("{0:F2} zł", @expense.Amount)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <input type="hidden" id="selectedExpenseId" />
+</div>

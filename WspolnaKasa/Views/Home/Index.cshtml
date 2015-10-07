@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = WspolnaKasa.App_GlobalResources.Translations .ApplicationName;
+    ViewBag.Lead = WspolnaKasa.App_GlobalResources.Translations.Home_Index_Lead;
+    ViewBag.GetStarted = WspolnaKasa.App_GlobalResources.Translations.Home_Index_GetStarted;
+    ViewBag.Split = WspolnaKasa.App_GlobalResources.Translations.Home_Index_Split;
+    ViewBag.SplitText = WspolnaKasa.App_GlobalResources.Translations.Home_Index_SplitText;
+    ViewBag.History = WspolnaKasa.App_GlobalResources.Translations.Home_Index_History;
+    ViewBag.HistoryText = WspolnaKasa.App_GlobalResources.Translations.Home_Index_HistoryText;
+    ViewBag.InviteFriends = WspolnaKasa.App_GlobalResources.Translations.Home_Index_InviteFriends;
+    ViewBag.InviteFriendsText = WspolnaKasa.App_GlobalResources.Translations.Home_Index_InviteFriendsText;
+}
+
+<div class="jumbotron">
+    <h1>@ViewBag.Title</h1>
+    <p class="lead">@ViewBag.Lead</p>
+    <p><a href="@Url.Action("Index", "Dashboard")" class="btn btn-primary btn-lg">@ViewBag.GetStarted</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>@ViewBag.Split</h2>
+        <p>@ViewBag.SplitText</p>
+    </div>
+    <div class="col-md-4">
+        <h2>@ViewBag.History</h2>
+        <p>@ViewBag.HistoryText</p>
+    </div>
+    <div class="col-md-4">
+        <h2>@ViewBag.InviteFriends</h2>
+        <p>@ViewBag.InviteFriendsText</p>
+    </div>
+</div>

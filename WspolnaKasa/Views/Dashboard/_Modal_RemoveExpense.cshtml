@@ -1,0 +1,31 @@
+﻿@model WspolnaKasa.Models.Dashboard.RemoveExpenseViewModel
+
+@{
+    ViewBag.ModalRemoveExpense_Title = WspolnaKasa.App_GlobalResources.Translations.Dashboard_RemoveExpense;
+    ViewBag.ModalRemoveExpense_RemoveBtn = WspolnaKasa.App_GlobalResources.Translations.Dashboard_Remove;
+    ViewBag.ModalRemoveExpense_Text = WspolnaKasa.App_GlobalResources.Translations.Dashboard_RemoveExpenseConfirmationText;
+}
+
+<div class="modal fade" id="removeExpenseModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">@ViewBag.ModalRemoveExpense_Title.</h4>
+            </div>
+            <div class="modal-body">
+                <p>@ViewBag.ModalRemoveExpense_Text</p>
+                @using (Html.BeginForm("RemoveExpense", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="form-group">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.ExpenseId, new { id = "expenseIdRemoveModal" })
+                    </div>
+                    <div style="text-align:right">
+                        <button type="submit" class="btn btn-primary btn-sm">@ViewBag.ModalRemoveExpense_RemoveBtn</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

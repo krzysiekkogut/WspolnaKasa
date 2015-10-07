@@ -1,0 +1,35 @@
+﻿@model WspolnaKasa.Models.Dashboard.ExpenseViewModel
+
+@{
+    ViewBag.ModalAddExpense_Title = WspolnaKasa.App_GlobalResources.Translations.Dashboard_AddExpense;
+    ViewBag.ModalAddExpense_GroupMembers = WspolnaKasa.App_GlobalResources.Translations.Dashboard_ModalAddExpense_GroupMembers;
+}
+
+<div class="modal fade" id="addExpenseModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">@ViewBag.ModalAddExpense_Title.</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("AddExpense", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="form-group">
+                        @Html.AntiForgeryToken()
+                        @Html.DropDownList("GroupId", null, WspolnaKasa.App_GlobalResources.Translations.Dashboard_GroupSelect, htmlAttributes: new { id = "groupSelectAddModal", @class = "form-control", style = "margin-bottom: 1px;" })
+                        <select id="participantsAddExpenseModal" name="Participants" class="form-control" multiple style="margin-bottom: 1px;">
+                            <option style="color:rgba(145, 145, 145, 1)">@ViewBag.ModalAddExpense_GroupMembers</option>
+                        </select>
+                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control", style = "margin-bottom: 1px;", placeholder = @Html.DisplayNameFor(m => m.Description) })
+                        @Html.TextBoxFor(m => m.Date, new { id = "dateAddExpenseModal", @class = "form-control datepicker", style = "margin-bottom: 1px;", placeholder = @Html.DisplayNameFor(m => m.Date) })
+                        @Html.TextBoxFor(m => m.Amount, new { @class = "form-control", style = "margin-bottom: 1px;", placeholder = @Html.DisplayNameFor(m => m.Amount) })
+                    </div>
+                    <div style="text-align:right">
+                        <button type="submit" class="btn btn-primary btn-sm">Dodaj</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

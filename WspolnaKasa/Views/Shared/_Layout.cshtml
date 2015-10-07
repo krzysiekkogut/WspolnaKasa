@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.ApplicationName = WspolnaKasa.App_GlobalResources.Translations.ApplicationName;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - @ViewBag.ApplicationName</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            var options = $.extend(
+                {},
+                $.datepicker.regional["pl"],
+                { dateFormat: "yy-mm-dd" });
+            $.datepicker.setDefaults(options);
+            $('.datepicker').datepicker();
+
+        });
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index", "Home", new { area = "" })" class="navbar-brand">@ViewBag.ApplicationName</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer class="row">
+            <div class="col-lg-12">
+                <p>&copy; <a href="https://pl.linkedin.com/in/krzysztofkogut">Krzysztof Kogut</a> @DateTime.Now.Year - Wspólna Kasa</p>
+            </div>
+        </footer>
+    </div>
+    <div class="modal fade" id="loadingIndicator" tabindex="-1" role="dialog" aria-labelledby="loadingIndicator-label" aria-hidden="true">
+        <div class="modal-dialog"></div>
+    </div>
+</body>
+</html>

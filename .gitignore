@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+*.suo
+*.user
+bin
+obj
+packages
+/WspolnaKasa/App_Data/aspnet-WspolnaKasa-20150309101023_log.ldf
+/WspolnaKasa/App_Data/aspnet-WspolnaKasa-20150309101023.mdf

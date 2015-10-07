@@ -1,0 +1,41 @@
+﻿@model WspolnaKasa.Models.IndexViewModel
+@{
+    ViewBag.Title = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_Title;
+    ViewBag.Password = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_Password;
+    ViewBag.ChangePassword = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_ChangePassword;
+    ViewBag.SetPassword = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_SetPassword;
+    ViewBag.ManageExternalLogins = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_ManageExternalLogins;
+    ViewBag.Change = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_Change;
+}
+
+<h2>@ViewBag.Title.</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>@ViewBag.Password:</dt>
+        <dd>
+            @if (Model.HasPassword)
+            {
+                <a href="@Url.Action("ChangePassword")">@ViewBag.ChangePassword</a>
+            }
+            else
+            {
+                <a href="@Url.Action("SetPassword")">@ViewBag.SetPassword</a>
+            }
+        </dd>
+        <dt>@Html.DisplayNameFor(x => x.Logins):</dt>
+        <dd>
+            <a href="@Url.Action("ManageLogins")">@ViewBag.ManageExternalLogins</a>
+        </dd>
+        <dt>@Html.DisplayNameFor(x => x.DisplayName):</dt>
+        <dd>
+            @using (Html.BeginForm("SaveDisplayName", "Manage", FormMethod.Post, new { @class = "form-group form-inline" }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="text" name="displayName" placeholder="@Model.DisplayName" value="" class="form-control" /> <input type="submit" value="@ViewBag.Change" class="btn btn-default" />
+            }
+        </dd>
+    </dl>
+</div>

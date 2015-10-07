@@ -1,0 +1,32 @@
+﻿@model WspolnaKasa.Models.Dashboard.TransferViewModel
+
+@{
+    ViewBag.ModalAddTransfer_Title = WspolnaKasa.App_GlobalResources.Translations.Dashboard_AddTransfer;
+}
+
+<div class="modal fade" id="addTransferModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">@ViewBag.ModalAddTransfer_Title.</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("AddTransfer", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="form-group">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.UserToId, new { id = "userIdSettleModal" })
+                        @Html.HiddenFor(m => m.GroupId, new { id = "groupIdSettleModal" })
+                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control", style = "margin-bottom: 1px;", placeholder = @Html.DisplayNameFor(m => m.Description) })
+                        @Html.TextBoxFor(m => m.Date, new { id = "dateAddTransferModal", @class = "form-control datepicker", style = "margin-bottom: 1px;", placeholder = @Html.DisplayNameFor(m => m.Date) })
+                        @Html.TextBoxFor(m => m.Amount, new { id = "amountAddTransferModal", @class = "form-control", style = "margin-bottom: 1px;", placeholder = @Html.DisplayNameFor(m => m.Amount) })
+                    </div>
+                    <div style="text-align:right">
+                        <button type="submit" class="btn btn-primary btn-sm">Dodaj</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
