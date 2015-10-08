@@ -50,7 +50,7 @@ namespace WspolnaKasa.App_Start
             container.RegisterType<DbContext, ApplicationDbContext>(new PerRequestLifetimeManager());
             container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(new PerRequestLifetimeManager());
             container.RegisterType<IAuthenticationManager>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().Authentication));
-            
+
             container.RegisterType<IGroupRepository, GroupRepository>();
             container.RegisterType<IExpensesRepository, ExpensesRepository>();
             container.RegisterType<ITransferRepository, TransferRepository>();

@@ -2,8 +2,6 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Newtonsoft.Json;
-using WspolnaKasa.App_Start;
 
 namespace WspolnaKasa
 {
@@ -18,7 +16,6 @@ namespace WspolnaKasa
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(UnityConfig.GetConfiguredContainer());
         }
     }
 }

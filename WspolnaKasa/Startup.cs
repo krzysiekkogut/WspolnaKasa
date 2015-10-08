@@ -2,7 +2,7 @@
 using Owin;
 using WspolnaKasa.App_Start;
 
-[assembly: OwinStartupAttribute(typeof(WspolnaKasa.Startup))]
+[assembly: OwinStartup(typeof(WspolnaKasa.Startup))]
 namespace WspolnaKasa
 {
     public partial class Startup
