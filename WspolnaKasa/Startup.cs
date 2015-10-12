@@ -10,7 +10,6 @@ namespace WspolnaKasa
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            UnityConfig.RegisterForWebApiAccountController();
         }
     }
 }

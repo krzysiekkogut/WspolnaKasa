@@ -58,18 +58,6 @@ namespace WspolnaKasa.App_Start
 
             container.RegisterType<IGroupService, GroupService>();
             container.RegisterType<ITransactionService, TransactionService>();
-        }
-
-        /// <summary>
-        /// NOTE: It is just a workaround. Unity was not able to work out these dependencies so they were added manually.
-        /// It is probably because of mixing two DI resolvers (for Web API 2 and MVC 5) in the same project.
-        /// </summary>
-        internal static void RegisterForWebApiAccountController()
-        {
-            GetConfiguredContainer().RegisterType<ISecureDataFormat<AuthenticationTicket>, SecureDataFormat<AuthenticationTicket>>();
-            GetConfiguredContainer().RegisterInstance<IDataSerializer<AuthenticationTicket>>(DataSerializers.Ticket);
-            GetConfiguredContainer().RegisterInstance<ITextEncoder>(TextEncodings.Base64);
-            GetConfiguredContainer().RegisterInstance<IDataProtector>(Startup.DataProtectionProvider.Create("ASP.NET Identity"));
-        }
+        }        
     }
 }
