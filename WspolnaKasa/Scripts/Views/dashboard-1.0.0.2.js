@@ -63,7 +63,7 @@ function groupsContainerInitialize() {
         $('#amountAddTransferModal').val(predefinedAmount);
         $('#addTransferModal').modal('show');
     });
-}
+};
 
 function expensesContainerInitialize() {
 
@@ -106,31 +106,32 @@ function expensesContainerInitialize() {
         var expenseId = $('#selectedExpenseId').val();
         $('#expenseIdRemoveModal').val(expenseId);
     });
-}
+};
 
 function modalsInitialize() {
 
     $('#groupSelectAddModal').change(function () {
-        $.ajax({
-            cache: false,
-            url: '/Dashboard/_MembersSelectByGroup/' + $(this).val(),
-            success: function (result) {
-                $('#participantsAddExpenseModal').html(result);
-                $('#participantsAddExpenseModal').find('option').prop('selected', 'selected');
-            }
-        });
+        loadGroupParticipantsToOptionList($(this).val(), '#participantsAddExpenseModal', false);
     });
+    loadGroupParticipantsToOptionList($('#groupSelectAddModal').val(), '#participantsAddExpenseModal', false);
 
     $('#groupSelectEditModal').change(function () {
-        $.ajax({
-            cache: false,
-            url: '/Dashboard/_MembersSelectByGroup/' + $(this).val(),
-            success: function (result) {
-                $('#participantsEditExpenseModal').html(result);
-            }
-        });
+        loadGroupParticipantsToOptionList($(this).val(), '#participantsEditExpenseModal', true);
     });
-}
+};
+
+function loadGroupParticipantsToOptionList(groupId, optionListId, editMode) {
+    $.ajax({
+        cache: false,
+        url: '/Dashboard/_MembersSelectByGroup/' + groupId,
+        success: function (result) {
+            $(optionListId).html(result);
+            if (!editMode) {
+                $(optionListId).find('option').prop('selected', 'selected');
+            }
+        }
+    });
+};
 
 function filterByGroup(groupId) {    
     $.ajax({

@@ -5,7 +5,7 @@
     ViewBag.Transfers = WspolnaKasa.App_GlobalResources.Translations.Dashboard_Index_Transfers;
 }
 
-<script src="~/Scripts/Views/dashboard-1.0.0.1.js"></script>
+@Scripts.Render("~/bundles/views/dashboard")
 
 <div class="dashboard-container">
     @if (!ViewData.ModelState.IsValid)
