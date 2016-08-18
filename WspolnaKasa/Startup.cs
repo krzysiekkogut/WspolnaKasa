@@ -1,6 +1,5 @@
 ﻿using Microsoft.Owin;
 using Owin;
-using WspolnaKasa.App_Start;
 
 [assembly: OwinStartup(typeof(WspolnaKasa.Startup))]
 namespace WspolnaKasa

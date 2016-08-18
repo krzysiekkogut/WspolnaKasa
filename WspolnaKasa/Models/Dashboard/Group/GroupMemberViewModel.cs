@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace WspolnaKasa.Models.Dashboard.Group
+﻿namespace WspolnaKasa.Models.Dashboard.Group
 {
     public class GroupMemberViewModel
     {

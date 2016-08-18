@@ -8,10 +8,6 @@ using ExpensesDomain.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
-using Microsoft.Owin.Security.DataHandler;
-using Microsoft.Owin.Security.DataHandler.Encoder;
-using Microsoft.Owin.Security.DataHandler.Serializer;
-using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Practices.Unity;
 
 namespace WspolnaKasa.App_Start

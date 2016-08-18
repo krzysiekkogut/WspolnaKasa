@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = WspolnaKasa.App_GlobalResources.Translations.Account_Login_Title;
     ViewBag.Login = WspolnaKasa.App_GlobalResources.Translations.Account_Login_Login;
-    ViewBag.ForgotPasswordLink = WspolnaKasa.App_GlobalResources.Translations.Account_Login_ForgotPasswordLink;
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -28,9 +27,6 @@
                 <div class="form-group col-md-12">
                     @Html.CheckBoxFor(m => m.RememberMe)
                     @Html.DisplayNameFor(m => m.RememberMe)
-                </div>
-                <div class="form-group col-md-12">
-                    <a href="@Url.Action("ForgotPassword")">@ViewBag.ForgotPasswordLink</a>
                 </div>
             }
         </section>

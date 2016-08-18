@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace ExpensesDomain.Exceptions
+﻿namespace ExpensesDomain.Exceptions
 {
-    public class WrongGroupPasswordException : Exception
+    public class WrongGroupPasswordException : System.Exception
     {
     }
 }

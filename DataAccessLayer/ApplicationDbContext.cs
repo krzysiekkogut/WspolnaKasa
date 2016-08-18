@@ -1,5 +1,4 @@
-﻿using System.Data.Entity.Infrastructure;
-using DataAccessLayer.Entities;
+﻿using DataAccessLayer.Entities;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DataAccessLayer

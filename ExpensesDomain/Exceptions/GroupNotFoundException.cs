@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace ExpensesDomain.Exceptions
+﻿namespace ExpensesDomain.Exceptions
 {
-    public class GroupNotFoundException : Exception
+    public class GroupNotFoundException : System.Exception
     {
     }
 }

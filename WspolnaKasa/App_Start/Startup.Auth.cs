@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web.Mvc;
 using DataAccessLayer;
 using DataAccessLayer.Entities;
 using Microsoft.AspNet.Identity;
@@ -64,8 +63,8 @@ namespace WspolnaKasa
             app.UseOAuthBearerTokens(OAuthOptions);
 
             app.UseFacebookAuthentication(
-               appId: "1449732075318823",
-               appSecret: "f698ccb6f7899baa35e8f41f5fce7ebe");
+                appId: System.Configuration.ConfigurationManager.AppSettings["facebookAppId"],
+                appSecret: System.Configuration.ConfigurationManager.AppSettings["facebookAppSecret"]);
         }
     }
 }

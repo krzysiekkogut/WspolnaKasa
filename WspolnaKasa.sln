@@ -1,13 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WspolnaKasa", "WspolnaKasa\WspolnaKasa.csproj", "{7ADF1D95-D36F-4406-8043-E49BB8D8EDBD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{B768113A-6CA2-43FC-9357-160FC2C8EA14}"
 	ProjectSection(SolutionItems) = preProject
-		Documents\API.docx = Documents\API.docx
 		Documents\LPP 2015 - przykładowy spis treści.docx = Documents\LPP 2015 - przykładowy spis treści.docx
 		Documents\LPP Wspólna Kasa - pełna dokumentacja.pdf = Documents\LPP Wspólna Kasa - pełna dokumentacja.pdf
 		Documents\UML Diagrams.vpp = Documents\UML Diagrams.vpp
@@ -58,23 +57,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://krzysiekkogut.visualstudio.com/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = WspolnaKasa\\WspolnaKasa.csproj
-		SccProjectName1 = WspolnaKasa
-		SccLocalPath1 = WspolnaKasa
-		SccProjectUniqueName2 = ExpensesDomain\\ExpensesDomain.csproj
-		SccProjectName2 = ExpensesDomain
-		SccLocalPath2 = ExpensesDomain
-		SccProjectUniqueName3 = ExpensesDomain.Tests\\ExpensesDomain.Tests.csproj
-		SccProjectName3 = ExpensesDomain.Tests
-		SccLocalPath3 = ExpensesDomain.Tests
-		SccProjectUniqueName4 = DataAccessLayer\\DataAccessLayer.csproj
-		SccProjectName4 = DataAccessLayer
-		SccLocalPath4 = DataAccessLayer
 	EndGlobalSection
 EndGlobal

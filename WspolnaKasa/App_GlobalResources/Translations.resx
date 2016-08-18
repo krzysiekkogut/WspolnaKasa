@@ -123,15 +123,6 @@
   <data name="AccountViewModels_RememberMe" xml:space="preserve">
     <value>Nie wylogowuj mnie.</value>
   </data>
-  <data name="Account_ConfirmEmail_LinkText" xml:space="preserve">
-    <value>zalogować</value>
-  </data>
-  <data name="Account_ConfirmEmail_Text" xml:space="preserve">
-    <value>Dziękujemy za potwierdzenie adresu e-mail. Teraz możesz się</value>
-  </data>
-  <data name="Account_ConfirmEmail_Title" xml:space="preserve">
-    <value>Adres e-mail został potwierdzony</value>
-  </data>
   <data name="Account_ExternalLoginConfirmation_RegisterLink" xml:space="preserve">
     <value>Zarejestruj</value>
   </data>
@@ -150,24 +141,6 @@
   <data name="Account_ExternalLoginsListPartial_LoginUsing" xml:space="preserve">
     <value>Zaloguj przez</value>
   </data>
-  <data name="Account_ForgotPasswordConfirmation_Text" xml:space="preserve">
-    <value>Na podany adres e-mail została wysłana wiadomość. Jeśli wiadomość nie przyszła w ciągu kilku minut, spróbuj pomownie. Sprawdź także folder spam.</value>
-  </data>
-  <data name="Account_ForgotPasswordConfirmation_Title" xml:space="preserve">
-    <value>Zapomniałeś hasła?</value>
-  </data>
-  <data name="Account_ForgotPassword_Continue" xml:space="preserve">
-    <value>Kontynuuj</value>
-  </data>
-  <data name="Account_ForgotPassword_Email" xml:space="preserve">
-    <value>Wprowadź adres e-mail.</value>
-  </data>
-  <data name="Account_ForgotPassword_Title" xml:space="preserve">
-    <value>Zapomniałeś hasła?</value>
-  </data>
-  <data name="Account_Login_ForgotPasswordLink" xml:space="preserve">
-    <value>Zapomniałeś hasła?</value>
-  </data>
   <data name="Account_Login_InvalidLoginAttempt" xml:space="preserve">
     <value>Błąd logowania. Upewnij się, że wprowadziłeś prawidłowe hasło.</value>
   </data>
@@ -183,29 +156,8 @@
   <data name="Account_Register_Title" xml:space="preserve">
     <value>Zarejestruj się</value>
   </data>
-  <data name="Account_ResetPasswordConfirmation_LinkText" xml:space="preserve">
-    <value>zalogować</value>
-  </data>
-  <data name="Account_ResetPasswordConfirmation_Text" xml:space="preserve">
-    <value>Twoje hasło zostało zmienione. Teraz możesz się</value>
-  </data>
-  <data name="Account_ResetPasswordConfirmation_Title" xml:space="preserve">
-    <value>Hasło zostało zmienione</value>
-  </data>
-  <data name="Account_ResetPassword_Title" xml:space="preserve">
-    <value>Ustaw nowe hasło</value>
-  </data>
-  <data name="ActivationMail_Body" xml:space="preserve">
-    <value>Witamy,&lt;br/&gt;&lt;br /&gt;Proszę &lt;a href="{0}"&gt;kliknij tutaj&lt;/a&gt;, by potwierdzić swój adres e-mail w serwisie &lt;a href="https://wspolnakasa.azurewebsites.net"&gt;Wspólna Kasa&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Jeśli to nie Ty dokonałeś rejestracji, zignoruj tę wiadomość.&lt;br/&gt;&lt;br /&gt;Pozdrawiamy!</value>
-  </data>
-  <data name="ActivationMail_Subject" xml:space="preserve">
-    <value>Potwierdź swój profil</value>
-  </data>
   <data name="ApplicationName" xml:space="preserve">
     <value>Wspólna Kasa</value>
-  </data>
-  <data name="Dasgboard_Summary_Total" xml:space="preserve">
-    <value>Razem</value>
   </data>
   <data name="Dashboard_AddExpense" xml:space="preserve">
     <value>Dodaj wydatek</value>
@@ -336,14 +288,11 @@
   <data name="Dashboard_SaveChanges" xml:space="preserve">
     <value>Zapisz zmiany</value>
   </data>
+  <data name="Dashboard_Summary_Total" xml:space="preserve">
+    <value>Razem</value>
+  </data>
   <data name="Dashboard_TransferTitle" xml:space="preserve">
     <value>Tytuł</value>
-  </data>
-  <data name="ForgotPasswordEmail_Body" xml:space="preserve">
-    <value>Witamy,&lt;br /&gt;&lt;br /&gt;Proszę &lt;a href="{0}"&gt;kliknij tutaj&lt;/a&gt;, by zmienić swoje hasło w serwisie &lt;a href="https://wspolnakasa.azurewebsites.net"&gt;Wspólna Kasa&lt;/a&gt;.&lt;br /&gt;&lt;br /&gt;Jeśli to nie Ty poprosiłeś o zmianę hasła, zignoruj tę wiadomość.&lt;br /&gt;&lt;br /&gt;Pozdrawiamy!</value>
-  </data>
-  <data name="ForgotPasswordEmail_Subject" xml:space="preserve">
-    <value>Zmiana hasła</value>
   </data>
   <data name="Home_Index_GetStarted" xml:space="preserve">
     <value>Przejdź do kokpitu</value>
@@ -433,7 +382,7 @@
     <value>Ustaw</value>
   </data>
   <data name="Shared_Error_Text" xml:space="preserve">
-    <value>Podczas przetwarzania żądania wystąpił błąd. Proszę spróbować ponownie lub wysłać e-mail z opisem problemu na &lt;a href="mailto:kontakt@wspolnakasa.pl"&gt;kontakt@wspolnakasa.pl&lt;/a&gt;.</value>
+    <value>Podczas przetwarzania żądania wystąpił błąd. Proszę spróbować ponownie poźniej.</value>
   </data>
   <data name="Shared_Error_Title" xml:space="preserve">
     <value>Wystapił błąd</value>

@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using DataAccessLayer;
-using DataAccessLayer.Entities;
 using DataAccessLayer.Entities.ExpensesDomain;
 using ExpensesDomain.Exceptions;
 using ExpensesDomain.Repositories;
