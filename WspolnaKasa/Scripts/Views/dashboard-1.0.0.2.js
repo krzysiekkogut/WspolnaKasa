@@ -9,11 +9,15 @@ function groupsContainerInitialize() {
     $('.groupInList').click(function () {
         if ($(this).parent().parent().next().hasClass('in')) {
             $('#btnEditGroup').addClass('disabled');
+            $('#btnEditGroup').attr('disabled', 'disabled');
             $('#btnRemoveGroup').addClass('disabled');
+            $('#btnRemoveGroup').attr('disabled', 'disabled');
         }
         else {
             $('#btnEditGroup').removeClass('disabled');
+            $('#btnEditGroup').removeAttr('disabled');
             $('#btnRemoveGroup').removeClass('disabled');
+            $('#btnRemoveGroup').removeAttr('disabled');
 
             // Hidden fields in forms populated.
             var selectedId = $(this).parent().prev().val();
@@ -25,7 +29,9 @@ function groupsContainerInitialize() {
 
     $('#btnClearFilterGroup').click(function () {
         $('#btnEditGroup').addClass('disabled');
+        $('#btnEditGroup').attr('disabled', 'disabled');
         $('#btnRemoveGroup').addClass('disabled');
+        $('#btnRemoveGroup').attr('disabled', 'disabled');
 
         $('.panel-collapse.collapse').collapse('hide');
 
@@ -73,7 +79,9 @@ function expensesContainerInitialize() {
             $('#expensesContainer tr').removeClass('active');
             $(this).addClass('active');
             $('#btnEditExpense').removeClass('disabled');
+            $('#btnEditExpense').removeAttr('disabled');
             $('#btnRemoveExpense').removeClass('disabled');
+            $('#btnRemoveExpense').removeAttr('disabled');
             var selectedExpenseId = $(this).find('input.expenseId').val();
             $('#selectedExpenseId').val(selectedExpenseId);
         }

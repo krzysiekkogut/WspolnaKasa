@@ -51,6 +51,7 @@ namespace WspolnaKasa.Controllers
                                 UserId = s.UserId,
                                 UserName = _userRepository.GetUser(s.UserId).DisplayName
                             })
+                            .Where(s => s.Amount != 0)
                     }));
         }
 
@@ -135,8 +136,8 @@ namespace WspolnaKasa.Controllers
                                     Amount = Math.Round(m.Amount, 2),
                                     Date = m.Date,
                                     Description = m.Description,
-                                    UserFrom = m.ApplicationUserId,
-                                    UserTo = m.ReceiverId,
+                                    UserFrom = m.ApplicationUser.DisplayName,
+                                    UserTo = _userRepository.GetUser(m.ReceiverId).DisplayName,
                                     Group = m.Group.Name
                                 }));
             }

@@ -294,6 +294,9 @@
   <data name="Dashboard_TransferTitle" xml:space="preserve">
     <value>Tytuł</value>
   </data>
+  <data name="GroupsSidebar_AllSettled" xml:space="preserve">
+    <value>Wszystko rozliczone!</value>
+  </data>
   <data name="Home_Index_GetStarted" xml:space="preserve">
     <value>Przejdź do kokpitu</value>
   </data>
