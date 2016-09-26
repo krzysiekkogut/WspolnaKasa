@@ -354,7 +354,6 @@
     <Content Include="Views\Dashboard\_Modal_AddTransfer.cshtml" />
     <Content Include="Views\Dashboard\_MembersSelect.cshtml" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
-    <Content Include="Views\Dashboard\_Modal_EditTransfer.cshtml" />
     <Content Include="Views\Dashboard\_Modal_RemoveTransfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
