@@ -6,8 +6,9 @@ namespace WspolnaKasa.Models.Dashboard
 {
     public class TransferViewModel
     {
+        public int TransferId { get; set; }
         public string UserFrom { get; set; }
-        
+
         [Required]
         public string UserToId { get; set; }
 

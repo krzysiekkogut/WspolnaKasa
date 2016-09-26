@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
     groupsContainerInitialize();
     expensesContainerInitialize();
+    transfersContainerInitialize();
     modalsInitialize();
 });
 
@@ -129,16 +130,18 @@ function modalsInitialize() {
 };
 
 function loadGroupParticipantsToOptionList(groupId, optionListId, editMode) {
-    $.ajax({
-        cache: false,
-        url: '/Dashboard/_MembersSelectByGroup/' + groupId,
-        success: function (result) {
-            $(optionListId).html(result);
-            if (!editMode) {
-                $(optionListId).find('option').prop('selected', 'selected');
+    if (groupId) {
+        $.ajax({
+            cache: false,
+            url: '/Dashboard/_MembersSelectByGroup/' + groupId,
+            success: function (result) {
+                $(optionListId).html(result);
+                if (!editMode) {
+                    $(optionListId).find('option').prop('selected', 'selected');
+                }
             }
-        }
-    });
+        });
+    }
 };
 
 function filterByGroup(groupId) {    
@@ -163,5 +166,19 @@ function filterByGroup(groupId) {
         complete: function () {
             $('#loadingIndicator').modal('hide');
         }
+    });
+};
+
+function transfersContainerInitialize() {
+    $('#transfersContainer tr').click(function () {
+        $('#btnRemoveTransfer').removeClass('disabled');
+        $('#btnRemoveTransfer').removeAttr('disabled');
+        var selectedTransferId = $(this).find('input.transferId').val();
+        $('#selectedTransferId').val(selectedTransferId);
+    });
+
+    $('#btnRemoveTransfer').click(function () {
+        var expenseId = $('#selectedTransferId').val();
+        $('#transferIdRemoveModal').val(expenseId);
     });
 };

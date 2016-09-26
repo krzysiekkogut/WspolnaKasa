@@ -176,5 +176,17 @@ namespace ExpensesDomain.Services
             _transferRepository.Add(transfer);
             _transferRepository.SaveChanges();
         }
+
+        public bool RemoveTransfer(string userId, int transferId)
+        {
+            var transfer = _transferRepository.Get(transferId);
+
+            if (transfer.ApplicationUserId != userId) return false;
+
+            _transferRepository.Remove(transfer);
+            _transferRepository.SaveChanges();
+
+            return true;
+        }
     }
 }

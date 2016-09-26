@@ -231,7 +231,8 @@
     <Compile Include="Models\Dashboard\Group\RemoveGroupViewModel.cs" />
     <Compile Include="Models\Dashboard\Settlements\SummaryViewModel.cs" />
     <Compile Include="Models\Dashboard\Settlements\SingleSettlementViewModel.cs" />
-    <Compile Include="Models\Dashboard\TransferViewModel.cs" />
+    <Compile Include="Models\Dashboard\Transfers\RemoveTransferViewModel.cs" />
+    <Compile Include="Models\Dashboard\Transfers\TransferViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
@@ -304,7 +305,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\Views\dashboard-1.0.0.2.js" />
+    <Content Include="Scripts\Views\dashboard-1.0.0.3.js" />
     <Content Include="Scripts\jquery-ui-i18n.min.js.map">
       <DependentUpon>jquery-ui-i18n.min.js</DependentUpon>
     </Content>
@@ -353,6 +354,8 @@
     <Content Include="Views\Dashboard\_Modal_AddTransfer.cshtml" />
     <Content Include="Views\Dashboard\_MembersSelect.cshtml" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Views\Dashboard\_Modal_EditTransfer.cshtml" />
+    <Content Include="Views\Dashboard\_Modal_RemoveTransfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

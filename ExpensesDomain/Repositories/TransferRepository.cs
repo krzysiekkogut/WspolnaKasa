@@ -2,6 +2,7 @@
 using DataAccessLayer;
 using DataAccessLayer.Entities.ExpensesDomain;
 using System.Linq;
+using System;
 
 namespace ExpensesDomain.Repositories
 {
@@ -42,6 +43,16 @@ namespace ExpensesDomain.Repositories
         public void Add(Transfer transfer)
         {
             _dbContext.Set<Transfer>().Add(transfer);
+        }
+
+        public Transfer Get(int transferId)
+        {
+            return _dbContext.Set<Transfer>().Find(transferId);
+        }
+
+        public void Remove(Transfer transfer)
+        {
+            _dbContext.Set<Transfer>().Remove(transfer);
         }
     }
 }

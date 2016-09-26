@@ -118,6 +118,7 @@ namespace WspolnaKasa.Controllers
                                 .GetAllSentAndReceivedTransfers(User.Identity.GetUserId())
                                 .Select(m => new TransferViewModel
                                 {
+                                    TransferId = m.TransferId,
                                     Amount = Math.Round(m.Amount, 2),
                                     Date = m.Date,
                                     Description = m.Description,
@@ -133,6 +134,7 @@ namespace WspolnaKasa.Controllers
                                 .GetAllSentAndReceivedTransfers(User.Identity.GetUserId(), id)
                                 .Select(m => new TransferViewModel
                                 {
+                                    TransferId = m.TransferId,
                                     Amount = Math.Round(m.Amount, 2),
                                     Date = m.Date,
                                     Description = m.Description,
@@ -330,6 +332,25 @@ namespace WspolnaKasa.Controllers
                 model.Description,
                 model.Date,
                 Math.Round(model.Amount, 2));
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RemoveTransfer(RemoveTransferViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Index();
+            }
+
+            var result = _transactionService.RemoveTransfer(User.Identity.GetUserId(), model.TransferId);
+            if (!result)
+            {
+                ModelState.AddModelError("", Translations.Dashboard_CannotRemoveOthersTransfers);
+                return Index();
+            }
+
             return RedirectToAction("Index");
         }
     }

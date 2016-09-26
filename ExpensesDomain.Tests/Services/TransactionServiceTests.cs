@@ -462,5 +462,31 @@ namespace ExpensesDomain.Tests.Services
 
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public void RemoveTransfer()
+        {
+            var transferId = 1;
+            var userId = "user";
+            var transfer = new Transfer { TransferId = transferId, ApplicationUserId = userId };
+            transferRepository.Setup(x => x.Get(transferId)).Returns(transfer);
+
+            transactionService.RemoveTransfer(userId, transferId);
+
+            transferRepository.Verify(x => x.Remove(transfer), Times.Once());
+            transferRepository.Verify(x => x.SaveChanges(), Times.Once());
+        }
+
+        [TestMethod]
+        public void RemoveTransfer_OtherUserRequest()
+        {
+            var transferId = 1;
+            var transfer = new Transfer { TransferId = transferId, ApplicationUserId = "otherUser" };
+            transferRepository.Setup(x => x.Get(transferId)).Returns(transfer);
+
+            var result = transactionService.RemoveTransfer("user", transferId);
+
+            Assert.IsFalse(result);
+        }
     }
 }

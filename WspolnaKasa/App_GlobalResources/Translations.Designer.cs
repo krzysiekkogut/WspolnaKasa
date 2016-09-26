@@ -250,6 +250,15 @@ namespace WspolnaKasa.App_GlobalResources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Nie można usuwać przelewów innych użytkowników..
+        /// </summary>
+        public static string Dashboard_CannotRemoveOthersTransfers {
+            get {
+                return ResourceManager.GetString("Dashboard_CannotRemoveOthersTransfers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Utwórz.
         /// </summary>
         public static string Dashboard_CreateButton {
@@ -561,6 +570,24 @@ namespace WspolnaKasa.App_GlobalResources {
         public static string Dashboard_RemoveGroupConfirmationText {
             get {
                 return ResourceManager.GetString("Dashboard_RemoveGroupConfirmationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Usuń przelew.
+        /// </summary>
+        public static string Dashboard_RemoveTransfer {
+            get {
+                return ResourceManager.GetString("Dashboard_RemoveTransfer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Czy na pewno chcesz usunąć przelew?.
+        /// </summary>
+        public static string Dashboard_RemoveTransferConfirmationText {
+            get {
+                return ResourceManager.GetString("Dashboard_RemoveTransferConfirmationText", resourceCulture);
             }
         }
         

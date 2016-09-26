@@ -12,5 +12,9 @@ namespace ExpensesDomain.Repositories
         void SaveChanges();
 
         void Add(Transfer transfer);
+
+        Transfer Get(int transferId);
+
+        void Remove(Transfer transfer);
     }
 }

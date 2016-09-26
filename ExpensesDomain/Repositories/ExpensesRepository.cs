@@ -56,7 +56,7 @@ namespace ExpensesDomain.Repositories
 
         public void Update(Expense expense)
         {
-            _dbContext.Entry<Expense>(expense).State = EntityState.Modified;
+            _dbContext.Entry(expense).State = EntityState.Modified;
         }
     }
 }

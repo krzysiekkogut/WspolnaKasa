@@ -1,0 +1,32 @@
+﻿@model WspolnaKasa.Models.Dashboard.RemoveTransferViewModel
+
+@{
+    ViewBag.ModalRemoveTransfer_Title = WspolnaKasa.App_GlobalResources.Translations.Dashboard_RemoveTransfer;
+    ViewBag.ModalRemoveTransfer_RemoveBtn = WspolnaKasa.App_GlobalResources.Translations.Dashboard_Remove;
+    ViewBag.ModalRemoveTransfer_Text = WspolnaKasa.App_GlobalResources.Translations.Dashboard_RemoveTransferConfirmationText;
+}
+
+<div class="modal fade" id="removeTransferModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">@ViewBag.ModalRemoveTransfer_Title.</h4>
+            </div>
+            <div class="modal-body">
+                <p>@ViewBag.ModalRemoveTransfer_Text</p>
+                @using (Html.BeginForm("RemoveTransfer", "Dashboard", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <div class="form-group">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.TransferId, new { id = "transferIdRemoveModal" })
+                    </div>
+                    <div style="text-align:right">
+                        <button type="submit" class="btn btn-primary btn-sm">@ViewBag.ModalRemoveTransfer_RemoveBtn</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

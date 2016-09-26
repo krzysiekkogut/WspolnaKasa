@@ -28,5 +28,7 @@ namespace ExpensesDomain.Services
         bool RemoveExpense(string userId, int expenseId);
 
         void AddTransfer(string userFrom, string userTo, int groupId, string description, DateTime date, double amount);
+
+        bool RemoveTransfer(string userId, int transferId);
     }
 }
