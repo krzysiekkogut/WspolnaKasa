@@ -1,30 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WspolnaKasa", "WspolnaKasa\WspolnaKasa.csproj", "{7ADF1D95-D36F-4406-8043-E49BB8D8EDBD}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{B768113A-6CA2-43FC-9357-160FC2C8EA14}"
-	ProjectSection(SolutionItems) = preProject
-		Documents\LPP 2015 - przykładowy spis treści.docx = Documents\LPP 2015 - przykładowy spis treści.docx
-		Documents\LPP Wspólna Kasa - pełna dokumentacja.pdf = Documents\LPP Wspólna Kasa - pełna dokumentacja.pdf
-		Documents\UML Diagrams.vpp = Documents\UML Diagrams.vpp
-		Documents\Wizja.docx = Documents\Wizja.docx
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MigrationScripts", "MigrationScripts", "{B51FE77C-CFFD-4EAC-9B7E-53EEC7C71EFC}"
-	ProjectSection(SolutionItems) = preProject
-		MigrationScripts\201504112215363_Initial.sql = MigrationScripts\201504112215363_Initial.sql
-		MigrationScripts\201504271308420_GroupHasUniqueNameAndSecret.sql = MigrationScripts\201504271308420_GroupHasUniqueNameAndSecret.sql
-		MigrationScripts\201505101342021_ExpensesRestructured.sql = MigrationScripts\201505101342021_ExpensesRestructured.sql
-		MigrationScripts\201505101434034_ExpensesApplicationUserRelation.sql = MigrationScripts\201505101434034_ExpensesApplicationUserRelation.sql
-		MigrationScripts\201505101529073_UserAdded.sql = MigrationScripts\201505101529073_UserAdded.sql
-		MigrationScripts\201505101650374_TransferAdded.sql = MigrationScripts\201505101650374_TransferAdded.sql
-		MigrationScripts\201505111348172_ReturnToApplicationUser.sql = MigrationScripts\201505111348172_ReturnToApplicationUser.sql
-		MigrationScripts\201505111737552_BindTransferToGroup.sql = MigrationScripts\201505111737552_BindTransferToGroup.sql
-		MigrationScripts\201505121829592_DisplayNameForUser.sql = MigrationScripts\201505121829592_DisplayNameForUser.sql
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpensesDomain", "ExpensesDomain\ExpensesDomain.csproj", "{0F04B017-8629-4C28-8840-856B2DF14FD0}"
 EndProject

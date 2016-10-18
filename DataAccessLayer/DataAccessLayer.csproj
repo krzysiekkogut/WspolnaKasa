@@ -68,77 +68,11 @@
     <Compile Include="Entities\ExpensesDomain\Transfer.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="IApplicationUserRepository.cs" />
-    <Compile Include="Migrations\201504112215363_Initial.cs" />
-    <Compile Include="Migrations\201504112215363_Initial.Designer.cs">
-      <DependentUpon>201504112215363_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504271308420_GroupHasUniqueNameAndSecret.cs" />
-    <Compile Include="Migrations\201504271308420_GroupHasUniqueNameAndSecret.Designer.cs">
-      <DependentUpon>201504271308420_GroupHasUniqueNameAndSecret.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505101342021_ExpensesRestructured.cs" />
-    <Compile Include="Migrations\201505101342021_ExpensesRestructured.Designer.cs">
-      <DependentUpon>201505101342021_ExpensesRestructured.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505101434034_ExpensesApplicationUserRelation.cs" />
-    <Compile Include="Migrations\201505101434034_ExpensesApplicationUserRelation.Designer.cs">
-      <DependentUpon>201505101434034_ExpensesApplicationUserRelation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505101529073_UserAdded.cs" />
-    <Compile Include="Migrations\201505101529073_UserAdded.Designer.cs">
-      <DependentUpon>201505101529073_UserAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505101650374_TransferAdded.cs" />
-    <Compile Include="Migrations\201505101650374_TransferAdded.Designer.cs">
-      <DependentUpon>201505101650374_TransferAdded.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505111348172_ReturnToApplicationUser.cs" />
-    <Compile Include="Migrations\201505111348172_ReturnToApplicationUser.Designer.cs">
-      <DependentUpon>201505111348172_ReturnToApplicationUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505111737552_BindTransferToGroup.cs" />
-    <Compile Include="Migrations\201505111737552_BindTransferToGroup.Designer.cs">
-      <DependentUpon>201505111737552_BindTransferToGroup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505121829592_DisplayNameForUser.cs" />
-    <Compile Include="Migrations\201505121829592_DisplayNameForUser.Designer.cs">
-      <DependentUpon>201505121829592_DisplayNameForUser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201504112215363_Initial.resx">
-      <DependentUpon>201504112215363_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504271308420_GroupHasUniqueNameAndSecret.resx">
-      <DependentUpon>201504271308420_GroupHasUniqueNameAndSecret.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505101342021_ExpensesRestructured.resx">
-      <DependentUpon>201505101342021_ExpensesRestructured.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505101434034_ExpensesApplicationUserRelation.resx">
-      <DependentUpon>201505101434034_ExpensesApplicationUserRelation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505101529073_UserAdded.resx">
-      <DependentUpon>201505101529073_UserAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505101650374_TransferAdded.resx">
-      <DependentUpon>201505101650374_TransferAdded.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505111348172_ReturnToApplicationUser.resx">
-      <DependentUpon>201505111348172_ReturnToApplicationUser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505111737552_BindTransferToGroup.resx">
-      <DependentUpon>201505111737552_BindTransferToGroup.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505121829592_DisplayNameForUser.resx">
-      <DependentUpon>201505121829592_DisplayNameForUser.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
