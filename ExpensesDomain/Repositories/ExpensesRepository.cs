@@ -22,21 +22,13 @@ namespace ExpensesDomain.Repositories
 
         public IEnumerable<Expense> GetAll(string userId)
         {
-            return _dbContext.Users
-                .Find(userId)
-                .Expenses
-                .Union(_dbContext.Expenses.Where(x => x.UserPayingId == userId))
-                .OrderByDescending(e => e.Date);
+            var user = _dbContext.Users.Find(userId);
+            return user.ExpensesPaid.Union(user.ExpensesParticipated).OrderByDescending(e => e.Date);
         }
 
         public IEnumerable<Expense> GetAll(string userId, int groupId)
         {
-            return _dbContext.Users
-                .Find(userId)
-                .Expenses
-                .Union(_dbContext.Expenses.Where(x => x.UserPayingId == userId))
-                .Where(e => e.GroupId == groupId)
-                .OrderByDescending(e => e.Date);
+            return GetAll(userId).Where(e => e.GroupId == groupId);
         }
 
         public Expense Get(int expenseId)

@@ -93,7 +93,7 @@ namespace ExpensesDomain.Tests.Services
                 .Setup(x => x.GetAllSentAndReceived(currentUser))
                 .Returns(new List<Transfer> 
                 {
-                    new Transfer { Amount = 100, ReceiverId = otherUser, ApplicationUserId = currentUser }
+                    new Transfer { Amount = 100, ReceiverId = otherUser, SenderId = currentUser }
                 });
 
             var result = transactionService.GetSummaryForUser(currentUser);
@@ -111,8 +111,8 @@ namespace ExpensesDomain.Tests.Services
                 .Setup(x => x.GetAllSentAndReceived(currentUser))
                 .Returns(new List<Transfer> 
                 {
-                    new Transfer { Amount = 50, ReceiverId = otherUser, ApplicationUserId = currentUser },
-                    new Transfer { Amount = 50, ReceiverId = otherUser, ApplicationUserId = currentUser }
+                    new Transfer { Amount = 50, ReceiverId = otherUser, SenderId = currentUser },
+                    new Transfer { Amount = 50, ReceiverId = otherUser, SenderId = currentUser }
                 });
 
             var result = transactionService.GetSummaryForUser(currentUser);
@@ -131,9 +131,9 @@ namespace ExpensesDomain.Tests.Services
                 .Setup(x => x.GetAllSentAndReceived(currentUser))
                 .Returns(new List<Transfer> 
                 {
-                    new Transfer { Amount = 50, ReceiverId = otherUser1, ApplicationUserId = currentUser },
-                    new Transfer { Amount = 50, ReceiverId = otherUser1, ApplicationUserId = currentUser },
-                    new Transfer { Amount = 66, ReceiverId = otherUser2, ApplicationUserId = currentUser }
+                    new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
+                    new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
+                    new Transfer { Amount = 66, ReceiverId = otherUser2, SenderId = currentUser }
                 });
 
             var result = transactionService.GetSummaryForUser(currentUser);
@@ -158,10 +158,10 @@ namespace ExpensesDomain.Tests.Services
                 .Setup(x => x.GetAllSentAndReceived(currentUser))
                 .Returns(new List<Transfer> 
                 {
-                    new Transfer { Amount = 50, ReceiverId = otherUser1, ApplicationUserId = currentUser },
-                    new Transfer { Amount = 50, ReceiverId = otherUser1, ApplicationUserId = currentUser },
-                    new Transfer { Amount = 66, ReceiverId = otherUser2, ApplicationUserId = currentUser },
-                    new Transfer { Amount = 40, ReceiverId = currentUser, ApplicationUserId = otherUser2}
+                    new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
+                    new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
+                    new Transfer { Amount = 66, ReceiverId = otherUser2, SenderId = currentUser },
+                    new Transfer { Amount = 40, ReceiverId = currentUser, SenderId = otherUser2}
                 });
 
             var result = transactionService.GetSummaryForUser(currentUser);
@@ -186,10 +186,10 @@ namespace ExpensesDomain.Tests.Services
                 .Setup(x => x.GetAllSentAndReceived(currentUser))
                 .Returns(new List<Transfer> 
                 {
-                    new Transfer { Amount = 50, ReceiverId = otherUser1, ApplicationUserId = currentUser },
-                    new Transfer { Amount = 50, ReceiverId = otherUser1, ApplicationUserId = currentUser },
-                    new Transfer { Amount = 66, ReceiverId = otherUser2, ApplicationUserId = currentUser },
-                    new Transfer { Amount = 40, ReceiverId = currentUser, ApplicationUserId = otherUser2}
+                    new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
+                    new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
+                    new Transfer { Amount = 66, ReceiverId = otherUser2, SenderId = currentUser },
+                    new Transfer { Amount = 40, ReceiverId = currentUser, SenderId = otherUser2}
                 });
             expensesRepository
                 .Setup(x => x.GetAll(currentUser))
@@ -228,10 +228,10 @@ namespace ExpensesDomain.Tests.Services
                 .Setup(x => x.GetAllSentAndReceived(currentUser))
                 .Returns(new List<Transfer> 
                 {
-                    new Transfer { Amount = 50, ReceiverId = otherUser1, ApplicationUserId = currentUser },
-                    new Transfer { Amount = 50, ReceiverId = otherUser1, ApplicationUserId = currentUser },
-                    new Transfer { Amount = 66, ReceiverId = otherUser2, ApplicationUserId = currentUser },
-                    new Transfer { Amount = 40, ReceiverId = currentUser, ApplicationUserId = otherUser2}
+                    new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
+                    new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
+                    new Transfer { Amount = 66, ReceiverId = otherUser2, SenderId = currentUser },
+                    new Transfer { Amount = 40, ReceiverId = currentUser, SenderId = otherUser2}
                 });
             expensesRepository
                 .Setup(x => x.GetAll(currentUser))
@@ -279,8 +279,8 @@ namespace ExpensesDomain.Tests.Services
                 .Setup(x => x.GetAllSentAndReceived(currentUser, filteredGroup))
                 .Returns(new List<Transfer> 
                 {
-                    new Transfer { Amount = 50, ReceiverId = otherUser1, ApplicationUserId = currentUser, GroupId = filteredGroup },
-                    new Transfer { Amount = 66, ReceiverId = otherUser2, ApplicationUserId = currentUser, GroupId = filteredGroup }
+                    new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser, GroupId = filteredGroup },
+                    new Transfer { Amount = 66, ReceiverId = otherUser2, SenderId = currentUser, GroupId = filteredGroup }
                 });
             expensesRepository
                 .Setup(x => x.GetAll(currentUser, filteredGroup))
@@ -468,7 +468,7 @@ namespace ExpensesDomain.Tests.Services
         {
             var transferId = 1;
             var userId = "user";
-            var transfer = new Transfer { TransferId = transferId, ApplicationUserId = userId };
+            var transfer = new Transfer { TransferId = transferId, SenderId = userId };
             transferRepository.Setup(x => x.Get(transferId)).Returns(transfer);
 
             transactionService.RemoveTransfer(userId, transferId);
@@ -481,7 +481,7 @@ namespace ExpensesDomain.Tests.Services
         public void RemoveTransfer_OtherUserRequest()
         {
             var transferId = 1;
-            var transfer = new Transfer { TransferId = transferId, ApplicationUserId = "otherUser" };
+            var transfer = new Transfer { TransferId = transferId, SenderId = "otherUser" };
             transferRepository.Setup(x => x.Get(transferId)).Returns(transfer);
 
             var result = transactionService.RemoveTransfer("user", transferId);

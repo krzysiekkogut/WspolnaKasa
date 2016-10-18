@@ -19,7 +19,7 @@ namespace DataAccessLayer
 
         public void UpdateUser(ApplicationUser user)
         {
-            _dbContext.Entry<ApplicationUser>(user).State = EntityState.Modified;
+            _dbContext.Entry(user).State = EntityState.Modified;
         }
 
         public void SaveChanges()

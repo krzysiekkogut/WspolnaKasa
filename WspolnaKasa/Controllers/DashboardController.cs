@@ -122,7 +122,7 @@ namespace WspolnaKasa.Controllers
                                     Amount = Math.Round(m.Amount, 2),
                                     Date = m.Date,
                                     Description = m.Description,
-                                    UserFrom = m.ApplicationUser.DisplayName,
+                                    UserFrom = m.Sender.DisplayName,
                                     UserTo = _userRepository.GetUser(m.ReceiverId).DisplayName,
                                     Group = m.Group.Name
                                 }));
@@ -138,7 +138,7 @@ namespace WspolnaKasa.Controllers
                                     Amount = Math.Round(m.Amount, 2),
                                     Date = m.Date,
                                     Description = m.Description,
-                                    UserFrom = m.ApplicationUser.DisplayName,
+                                    UserFrom = m.Sender.DisplayName,
                                     UserTo = _userRepository.GetUser(m.ReceiverId).DisplayName,
                                     Group = m.Group.Name
                                 }));

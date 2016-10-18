@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLayer.Entities.ExpensesDomain
 {
@@ -9,15 +10,18 @@ namespace DataAccessLayer.Entities.ExpensesDomain
         public int TransferId { get; set; }
         
         [Required]
-        public string ApplicationUserId { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
+        public string SenderId { get; set; }
+        [ForeignKey("SenderId")]
+        public virtual ApplicationUser Sender { get; set; }
+
+        [Required]
+        public string ReceiverId { get; set; }
+        [ForeignKey("ReceiverId")]
+        public virtual ApplicationUser Receiver { get; set; }
 
         [Required]
         public int GroupId { get; set; }
         public virtual Group Group { get; set; }
-
-        [Required]
-        public string ReceiverId { get; set; }
 
         [Required]
         public string Description { get; set; }

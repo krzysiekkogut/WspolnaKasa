@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccessLayer.Entities.ExpensesDomain
 {
@@ -15,19 +16,22 @@ namespace DataAccessLayer.Entities.ExpensesDomain
         public int ExpenseId { get; set; }
 
         [Required]
-        public string UserPayingId { get; set; }
-
-        [Required]
         public string Description { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
 
-        public virtual List<ApplicationUser> Participants { get; set; }
-
         [Range(0.01, double.MaxValue)]
         [Required]
         public double Amount { get; set; }
+
+        [Required]
+        public string UserPayingId { get; set; }
+
+        [ForeignKey("UserPayingId")]
+        public virtual ApplicationUser UserPaying { get; set; }
+        
+        public virtual List<ApplicationUser> Participants { get; set; }
 
         [Required]
         public int GroupId { get; set; }

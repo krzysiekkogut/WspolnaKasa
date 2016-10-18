@@ -71,13 +71,13 @@ namespace ExpensesDomain.Services
         private IEnumerable<Settlement> GroupTransfersAndExpensesToSummary(string userId, IEnumerable<Transfer> transfers, IEnumerable<Expense> expenses)
         {
             var transfersSent = transfers
-                .Where(t => t.ApplicationUserId == userId)
+                .Where(t => t.SenderId == userId)
                 .GroupBy(t => t.ReceiverId)
                 .Select(tg => new Settlement { Amount = tg.Sum(s => s.Amount), UserId = tg.Key });
 
             var transfersReceived = transfers
                 .Where(t => t.ReceiverId == userId)
-                .GroupBy(t => t.ApplicationUserId)
+                .GroupBy(t => t.SenderId)
                 .Select(tg => new Settlement { Amount = -tg.Sum(s => s.Amount), UserId = tg.Key });
 
             var expensesPaid = expenses
@@ -165,13 +165,14 @@ namespace ExpensesDomain.Services
             var transfer = new Transfer
             {
                 Amount = amount,
-                ApplicationUser = _userRepository.GetUser(userFrom),
-                ApplicationUserId = userFrom,
+                Sender = _userRepository.GetUser(userFrom),
+                SenderId = userFrom,
                 Date = date,
                 Description = description,
                 Group = group,
                 GroupId = groupId,
-                ReceiverId = userTo
+                ReceiverId = userTo,
+                Receiver = _userRepository.GetUser(userTo)
             };
             _transferRepository.Add(transfer);
             _transferRepository.SaveChanges();
@@ -181,7 +182,7 @@ namespace ExpensesDomain.Services
         {
             var transfer = _transferRepository.Get(transferId);
 
-            if (transfer.ApplicationUserId != userId) return false;
+            if (transfer.SenderId != userId) return false;
 
             _transferRepository.Remove(transfer);
             _transferRepository.SaveChanges();

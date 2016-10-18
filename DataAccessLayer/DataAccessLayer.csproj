@@ -63,9 +63,9 @@
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="ApplicationUserRepository.cs" />
-    <Compile Include="Entities\ExpensesDomain\Expense.cs" />
-    <Compile Include="Entities\ExpensesDomain\Group.cs" />
-    <Compile Include="Entities\ExpensesDomain\Transfer.cs" />
+    <Compile Include="Entities\Expense.cs" />
+    <Compile Include="Entities\Group.cs" />
+    <Compile Include="Entities\Transfer.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="IApplicationUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

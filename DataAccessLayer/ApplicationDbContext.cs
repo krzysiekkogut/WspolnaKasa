@@ -15,10 +15,10 @@ namespace DataAccessLayer
             return new ApplicationDbContext();
         }
 
-        public System.Data.Entity.DbSet<DataAccessLayer.Entities.ExpensesDomain.Group> Groups { get; set; }
+        public System.Data.Entity.DbSet<Entities.ExpensesDomain.Group> Groups { get; set; }
 
-        public System.Data.Entity.DbSet<DataAccessLayer.Entities.ExpensesDomain.Expense> Expenses { get; set; }
+        public System.Data.Entity.DbSet<Entities.ExpensesDomain.Expense> Expenses { get; set; }
 
-        public System.Data.Entity.DbSet<DataAccessLayer.Entities.ExpensesDomain.Transfer> Transfers { get; set; }
+        public System.Data.Entity.DbSet<Entities.ExpensesDomain.Transfer> Transfers { get; set; }
     }
 }
