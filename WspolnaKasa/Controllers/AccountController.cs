@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using DataAccessLayer.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using WspolnaKasa.App_GlobalResources;
 using WspolnaKasa.Models;
+using Domain.Entities;
 
 namespace WspolnaKasa.Controllers
 {
@@ -14,15 +14,15 @@ namespace WspolnaKasa.Controllers
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private UserManager _userManager;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(UserManager userManager, ApplicationSignInManager signInManager)
         {
-            userManager.UserValidator = new UserValidator<ApplicationUser>(userManager)
+            userManager.UserValidator = new UserValidator<User>(userManager)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
@@ -43,11 +43,11 @@ namespace WspolnaKasa.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public UserManager UserManager
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<UserManager>();
             }
             private set
             {
@@ -107,7 +107,7 @@ namespace WspolnaKasa.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser
+                var user = new User
                 {
                     UserName = model.Email,
                     Email = model.Email,
@@ -185,7 +185,7 @@ namespace WspolnaKasa.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, DisplayName = model.UserName };
+                var user = new User { UserName = model.Email, Email = model.Email, DisplayName = model.UserName };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

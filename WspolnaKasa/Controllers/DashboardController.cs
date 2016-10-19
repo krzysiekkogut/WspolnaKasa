@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Mvc;
-using DataAccessLayer;
-using ExpensesDomain.Exceptions;
-using ExpensesDomain.Services;
 using Microsoft.AspNet.Identity;
 using WspolnaKasa.App_GlobalResources;
 using WspolnaKasa.Models.Dashboard;
 using WspolnaKasa.Models.Dashboard.Group;
+using Domain.Services;
+using DataAccessLayer.Repositories;
+using Domain.Exceptions;
 
 namespace WspolnaKasa.Controllers
 {
@@ -16,9 +16,9 @@ namespace WspolnaKasa.Controllers
     {
         private IGroupService _groupService;
         private ITransactionService _transactionService;
-        private IApplicationUserRepository _userRepository;
+        private IUserRepository _userRepository;
 
-        public DashboardController(IGroupService groupService, ITransactionService transactionService, IApplicationUserRepository userRepository)
+        public DashboardController(IGroupService groupService, ITransactionService transactionService, IUserRepository userRepository)
         {
             _groupService = groupService;
             _transactionService = transactionService;

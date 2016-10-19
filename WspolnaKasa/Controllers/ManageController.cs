@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using DataAccessLayer;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using WspolnaKasa.App_GlobalResources;
 using WspolnaKasa.Models;
+using DataAccessLayer.Repositories;
 
 namespace WspolnaKasa.Controllers
 {
@@ -14,10 +14,10 @@ namespace WspolnaKasa.Controllers
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
-        private IApplicationUserRepository _userRepository;
+        private UserManager _userManager;
+        private IUserRepository _userRepository;
 
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IApplicationUserRepository userRepository)
+        public ManageController(UserManager userManager, ApplicationSignInManager signInManager, IUserRepository userRepository)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,7 +36,7 @@ namespace WspolnaKasa.Controllers
             }
         }
 
-        public ApplicationUserManager UserManager
+        public UserManager UserManager
         {
             get
             {

@@ -2,13 +2,13 @@ using System;
 using System.Data.Entity;
 using System.Web;
 using DataAccessLayer;
-using DataAccessLayer.Entities;
-using ExpensesDomain.Repositories;
-using ExpensesDomain.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Microsoft.Practices.Unity;
+using Domain.Entities;
+using DataAccessLayer.Repositories;
+using Domain.Services;
 
 namespace WspolnaKasa.App_Start
 {
@@ -44,13 +44,13 @@ namespace WspolnaKasa.App_Start
             // container.LoadConfiguration();
 
             container.RegisterType<DbContext, ApplicationDbContext>(new PerRequestLifetimeManager());
-            container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>(new PerRequestLifetimeManager());
+            container.RegisterType<IUserStore<User>, UserStore<User>>(new PerRequestLifetimeManager());
             container.RegisterType<IAuthenticationManager>(new InjectionFactory(o => HttpContext.Current.GetOwinContext().Authentication));
 
             container.RegisterType<IGroupRepository, GroupRepository>();
             container.RegisterType<IExpensesRepository, ExpensesRepository>();
             container.RegisterType<ITransferRepository, TransferRepository>();
-            container.RegisterType<IApplicationUserRepository, ApplicationUserRepository>();
+            container.RegisterType<IUserRepository, UserRepository>();
 
             container.RegisterType<IGroupService, GroupService>();
             container.RegisterType<ITransactionService, TransactionService>();

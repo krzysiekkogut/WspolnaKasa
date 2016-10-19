@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using DataAccessLayer.Entities;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using Domain.Entities;
 
 namespace WspolnaKasa.Providers
 {
@@ -26,9 +26,9 @@ namespace WspolnaKasa.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+            var userManager = context.OwinContext.GetUserManager<UserManager>();
 
-            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+            User user = await userManager.FindAsync(context.UserName, context.Password);
 
             if (user == null)
             {

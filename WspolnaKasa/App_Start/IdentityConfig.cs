@@ -2,34 +2,34 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using DataAccessLayer;
-using DataAccessLayer.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
+using Domain.Entities;
 
 namespace WspolnaKasa
 {
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
-    public class ApplicationUserManager : UserManager<ApplicationUser>
+    public class UserManager : UserManager<User>
     {
-        public ApplicationUserManager(IUserStore<ApplicationUser> store)
+        public UserManager(IUserStore<User> store)
             : base(store)
         {
             var dataProtectorProvider = Startup.DataProtectionProvider;
             var dataProtector = dataProtectorProvider.Create("ASP.NET Identity");
-            UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser, string>(dataProtector)
+            UserTokenProvider = new DataProtectorTokenProvider<User, string>(dataProtector)
             {
                 TokenLifespan = TimeSpan.FromHours(24),
             };
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+        public static UserManager Create(IdentityFactoryOptions<UserManager> options, IOwinContext context) 
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+            var manager = new UserManager(new UserStore<User>(context.Get<ApplicationDbContext>()));
             // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<ApplicationUser>(manager)
+            manager.UserValidator = new UserValidator<User>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
@@ -50,28 +50,28 @@ namespace WspolnaKasa
             if (dataProtectionProvider != null)
             {
                 manager.UserTokenProvider = 
-                    new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+                    new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
         }
     }
 
     // Configure the application sign-in manager which is used in this application.
-    public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
+    public class ApplicationSignInManager : SignInManager<User, string>
     {
-        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
+        public ApplicationSignInManager(UserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         {
         }
 
-        public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
+        public override Task<ClaimsIdentity> CreateUserIdentityAsync(User user)
         {
-            return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager, DefaultAuthenticationTypes.ApplicationCookie);
+            return user.GenerateUserIdentityAsync((UserManager)UserManager, DefaultAuthenticationTypes.ApplicationCookie);
         }
 
         public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
         {
-            return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
+            return new ApplicationSignInManager(context.GetUserManager<UserManager>(), context.Authentication);
         }
     }
 }
