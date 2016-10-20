@@ -1,85 +1,98 @@
-﻿using System.Collections.Generic;
-using DataAccessLayer.Repositories;
+﻿using DataAccessLayer;
 using Domain.Entities;
 using Domain.Exceptions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Domain.Services
 {
     public class GroupService : IGroupService
     {
-        private IGroupRepository _groupRepository;
-        private IUserRepository _usersRepository;
+        private IUnitOfWork _unitOfWork;
 
-        public GroupService(IGroupRepository groupRepository, IUserRepository usersRepository)
+        public GroupService(IUnitOfWork unitOfWork)
         {
-            _groupRepository = groupRepository;
-            _usersRepository = usersRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<Group> GetAllGroups(string userId)
         {
-            return _groupRepository.GetAll(userId);
+            return _unitOfWork.UsersRepository.Get(userId).Groups;
         }
 
         public Group GetGroup(int groupId)
         {
-            return _groupRepository.Get(groupId);
+            return _unitOfWork.GroupsRepository.Get(groupId);
         }
 
-        public bool CreateGroup(string name, string secret, string currentUser)
+        public bool CreateGroup(string groupName, string secret, string currentUserId)
         {
-            if (GroupExists(name)) return false;
+            if (GroupExists(groupName))
+            {
+                return false;
+            }
+
             var group = new Group
             {
-                Name = name,
+                Name = groupName,
                 Secret = secret
             };
-            group.Members.Add(_usersRepository.GetUser(currentUser));
-            _groupRepository.Add(group);
-            _groupRepository.SaveChanges();
+            group.Members.Add(_unitOfWork.UsersRepository.Get(currentUserId));
+            _unitOfWork.GroupsRepository.Add(group);
+            _unitOfWork.SaveChanges();
             
             return true;
         }
 
-        public void JoinGroup(string name, string secret, string currentUser)
+        public void JoinGroup(string groupName, string secret, string currentUserId)
         {
-            if (!GroupExists(name))
+            if (!GroupExists(groupName))
             {
                 throw new GroupNotFoundException();
             }
-            var group = _groupRepository.Get(name);
+
+            var group = _unitOfWork.GroupsRepository.GetAll().Single(g => g.Name == groupName);
             if (group.Secret != secret)
             {
                 throw new WrongGroupPasswordException();
             }
 
-            group.Members.Add(_usersRepository.GetUser(currentUser));
-            _groupRepository.Update(group);
-            _groupRepository.SaveChanges();
+            group.Members.Add(_unitOfWork.UsersRepository.Get(currentUserId));
+            _unitOfWork.GroupsRepository.Update(group);
+            _unitOfWork.SaveChanges();
         }
         
-        public bool EditGroup(int groupId, string newName)
+        public bool EditGroup(int groupId, string newGroupName)
         {
-            if (GroupExists(newName)) return false;
-            var group = _groupRepository.Get(groupId);
-            group.Name = newName;
-            _groupRepository.Update(group);
-            _groupRepository.SaveChanges();
+            if (GroupExists(newGroupName))
+            {
+                return false;
+            }
+
+            var group = _unitOfWork.GroupsRepository.Get(groupId);
+            group.Name = newGroupName;
+            _unitOfWork.GroupsRepository.Update(group);
+            _unitOfWork.SaveChanges();
             return true;
         }
 
         public bool RemoveGroup(int groupId, string secret)
         {
-            var group = _groupRepository.Get(groupId);
-            if (group.Secret != secret) return false;
-            _groupRepository.Remove(group);
-            _groupRepository.SaveChanges();
+            var group = _unitOfWork.GroupsRepository.Get(groupId);
+            if (group.Secret != secret)
+            {
+                return false;
+            }
+
+            _unitOfWork.GroupsRepository.Remove(group);
+            _unitOfWork.SaveChanges();
             return true;
         }
-     
+
         private bool GroupExists(string name)
         {
-            return _groupRepository.Exists(name);
+            return _unitOfWork.GroupsRepository
+                .GetAll().Any(g => g.Name == name);
         }
     }
 }

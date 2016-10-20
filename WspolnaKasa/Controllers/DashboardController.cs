@@ -6,7 +6,6 @@ using WspolnaKasa.App_GlobalResources;
 using WspolnaKasa.Models.Dashboard;
 using WspolnaKasa.Models.Dashboard.Group;
 using Domain.Services;
-using DataAccessLayer.Repositories;
 using Domain.Exceptions;
 
 namespace WspolnaKasa.Controllers
@@ -16,13 +15,11 @@ namespace WspolnaKasa.Controllers
     {
         private IGroupService _groupService;
         private ITransactionService _transactionService;
-        private IUserRepository _userRepository;
 
-        public DashboardController(IGroupService groupService, ITransactionService transactionService, IUserRepository userRepository)
+        public DashboardController(IGroupService groupService, ITransactionService transactionService)
         {
             _groupService = groupService;
             _transactionService = transactionService;
-            _userRepository = userRepository;
         }
 
         public ActionResult Index()
@@ -49,7 +46,7 @@ namespace WspolnaKasa.Controllers
                             {
                                 Amount = Math.Round(s.Amount, 2),
                                 UserId = s.UserId,
-                                UserName = _userRepository.GetUser(s.UserId).DisplayName
+                                UserName = s.UserName
                             })
                             .Where(s => s.Amount != 0)
                     }));
@@ -62,7 +59,7 @@ namespace WspolnaKasa.Controllers
                 .Select(s => new SingleSettlementViewModel
                 {
                     Amount = Math.Round(s.Amount, 2),
-                    UserName = _userRepository.GetUser(s.UserId).DisplayName
+                    UserName = s.UserName
                 });
             return PartialView(
                 new SummaryViewModel
@@ -71,7 +68,8 @@ namespace WspolnaKasa.Controllers
                     TotalAmount = settlements.Sum(x => x.Amount)
                 });
         }
-
+        
+        // TODO: get rid of -1
         public PartialViewResult _Expenses(int id = -1)
         {
             if (id == -1)
@@ -87,7 +85,7 @@ namespace WspolnaKasa.Controllers
                             ExpenseId = m.ExpenseId,
                             Group = m.Group.Name,
                             GroupId = m.GroupId,
-                            User = _userRepository.GetUser(m.UserPayingId).DisplayName,
+                            User = m.UserPaying.DisplayName,
                             Editable = User.Identity.GetUserId() == m.UserPayingId,
                         }));
             }
@@ -103,12 +101,13 @@ namespace WspolnaKasa.Controllers
                             Description = m.Description,
                             ExpenseId = m.ExpenseId,
                             Group = m.Group.Name,
-                            User = _userRepository.GetUser(m.UserPayingId).DisplayName,
+                            User = m.UserPaying.DisplayName,
                             Editable = User.Identity.GetUserId() == m.UserPayingId,
                         }));
             }
         }
 
+        // TODO: get rid of -1
         public PartialViewResult _Transfers(int id = -1)
         {
             if (id == -1)
@@ -123,7 +122,7 @@ namespace WspolnaKasa.Controllers
                                     Date = m.Date,
                                     Description = m.Description,
                                     UserFrom = m.Sender.DisplayName,
-                                    UserTo = _userRepository.GetUser(m.ReceiverId).DisplayName,
+                                    UserTo = m.Receiver.DisplayName,
                                     Group = m.Group.Name
                                 }));
             }
@@ -139,7 +138,7 @@ namespace WspolnaKasa.Controllers
                                     Date = m.Date,
                                     Description = m.Description,
                                     UserFrom = m.Sender.DisplayName,
-                                    UserTo = _userRepository.GetUser(m.ReceiverId).DisplayName,
+                                    UserTo = m.Receiver.DisplayName,
                                     Group = m.Group.Name
                                 }));
             }
@@ -157,7 +156,7 @@ namespace WspolnaKasa.Controllers
             var members = expense.Participants.Select(x => new GroupMemberViewModel { Id = x.Id, Name = x.DisplayName, Selected = true }).ToList();
             foreach (var member in expense.Group.Members)
             {
-                if (members.Any(x => x.Id == member.Id) == false)
+                if (!members.Any(x => x.Id == member.Id))
                 {
                     members.Add(new GroupMemberViewModel { Id = member.Id, Name = member.DisplayName, Selected = false });
                 }
@@ -165,6 +164,7 @@ namespace WspolnaKasa.Controllers
             return PartialView("_MembersSelect", members);
         }
 
+        // TODO: split to two methods
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateJoinGroup(CreateJoinGroupViewModel model, string CreateOrJoin)
@@ -173,6 +173,7 @@ namespace WspolnaKasa.Controllers
             {
                 return Index();
             }
+
             switch (CreateOrJoin)
             {
                 case "Create":
@@ -212,6 +213,7 @@ namespace WspolnaKasa.Controllers
             {
                 return Index();
             }
+
             var result = _groupService.EditGroup(model.GroupId, model.NewName);
             if (!result)
             {
@@ -230,6 +232,7 @@ namespace WspolnaKasa.Controllers
             {
                 return Index();
             }
+
             var result = _groupService.RemoveGroup(model.GroupId, model.Secret);
             if (!result)
             {

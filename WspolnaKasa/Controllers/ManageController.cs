@@ -6,7 +6,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using WspolnaKasa.App_GlobalResources;
 using WspolnaKasa.Models;
-using DataAccessLayer.Repositories;
 
 namespace WspolnaKasa.Controllers
 {
@@ -15,13 +14,11 @@ namespace WspolnaKasa.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private UserManager _userManager;
-        private IUserRepository _userRepository;
 
-        public ManageController(UserManager userManager, ApplicationSignInManager signInManager, IUserRepository userRepository)
+        public ManageController(UserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
-            _userRepository = userRepository;
         }
 
         public ApplicationSignInManager SignInManager
@@ -63,7 +60,7 @@ namespace WspolnaKasa.Controllers
             {
                 HasPassword = HasPassword(),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                DisplayName = _userRepository.GetUser(userId).DisplayName
+                DisplayName = UserManager.FindById(userId).DisplayName
             };
             return View(model);
         }
@@ -194,10 +191,7 @@ namespace WspolnaKasa.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SaveDisplayName(string displayName)
         {
-            var user = _userRepository.GetUser(User.Identity.GetUserId());
-            user.DisplayName = displayName;
-            _userRepository.UpdateUser(user);
-            _userRepository.SaveChanges();
+            UserManager.SetDisplayName(User.Identity.GetUserId(), displayName);
             return RedirectToAction("Index");
         }
 

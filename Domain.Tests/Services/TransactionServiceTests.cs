@@ -14,7 +14,7 @@ namespace ExpensesDomain.Tests.Services
     public class TransactionServiceTests
     {
         private TransactionService transactionService;
-        private Mock<IExpensesRepository> expensesRepository;
+        private Mock<IExpenseRepository> expensesRepository;
         private Mock<ITransferRepository> transferRepository;
         private Mock<IGroupService> groupService;
         private Mock<IUserRepository> userRepository;
@@ -23,7 +23,7 @@ namespace ExpensesDomain.Tests.Services
         [TestInitialize]
         public void Setup()
         {
-            expensesRepository = new Mock<IExpensesRepository>();
+            expensesRepository = new Mock<IExpenseRepository>();
             transferRepository = new Mock<ITransferRepository>();
             groupService = new Mock<IGroupService>();
             userRepository = new Mock<IUserRepository>();

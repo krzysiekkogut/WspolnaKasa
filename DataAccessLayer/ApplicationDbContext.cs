@@ -16,9 +16,7 @@ namespace DataAccessLayer
         }
 
         public System.Data.Entity.DbSet<Group> Groups { get; set; }
-
         public System.Data.Entity.DbSet<Expense> Expenses { get; set; }
-
         public System.Data.Entity.DbSet<Transfer> Transfers { get; set; }
     }
 }

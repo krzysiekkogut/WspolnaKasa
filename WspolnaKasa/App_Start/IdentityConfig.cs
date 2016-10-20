@@ -54,6 +54,13 @@ namespace WspolnaKasa
             }
             return manager;
         }
+
+        public void SetDisplayName(string userId, string displayName)
+        {
+            var user = this.FindById(userId);
+            user.DisplayName = displayName;
+            this.Update(user);
+        }
     }
 
     // Configure the application sign-in manager which is used in this application.

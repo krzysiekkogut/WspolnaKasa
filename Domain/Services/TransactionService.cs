@@ -1,113 +1,130 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System;
-using DataAccessLayer.Repositories;
 using Domain.Entities;
 using Domain.Models;
+using DataAccessLayer;
 
 namespace Domain.Services
 {
     public class TransactionService : ITransactionService
     {
-        private IExpensesRepository _expensesRepository;
-        private ITransferRepository _transferRepository;
-        private IGroupService _groupService;
-        private IUserRepository _userRepository;
+        private IUnitOfWork _unitOfWork;
 
-        public TransactionService(
-            IExpensesRepository expensesRepository,
-            ITransferRepository transferRepository,
-            IGroupService groupService,
-            IUserRepository userRepository)
+        public TransactionService(IUnitOfWork unitOfWork)
         {
-            _expensesRepository = expensesRepository;
-            _transferRepository = transferRepository;
-            _groupService = groupService;
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public Expense GetExpense(int id)
         {
-            return _expensesRepository.Get(id);
+            return _unitOfWork.ExpensesRepository.Get(id);
         }
 
         public IEnumerable<Expense> GetAllExpenses(string userId)
         {
-            return _expensesRepository.GetAll(userId);
+            var user = _unitOfWork.UsersRepository.Get(userId);
+            return user.ExpensesPaid.Union(user.ExpensesParticipated).OrderByDescending(e => e.Date);
         }
 
         public IEnumerable<Expense> GetAllExpenses(string userId, int groupId)
         {
-            return _expensesRepository.GetAll(userId, groupId);
+            return GetAllExpenses(userId).Where(e => e.GroupId == groupId);
         }
 
         public IEnumerable<Transfer> GetAllSentAndReceivedTransfers(string userId)
         {
-            return _transferRepository.GetAllSentAndReceived(userId);
+            var user = _unitOfWork.UsersRepository.Get(userId);
+            return user.TransfersReceived.Union(user.TransfersSent).OrderByDescending(t => t.Date);
         }
 
         public IEnumerable<Transfer> GetAllSentAndReceivedTransfers(string userId, int groupId)
         {
-            return _transferRepository.GetAllSentAndReceived(userId, groupId);
+            return GetAllSentAndReceivedTransfers(userId).Where(t => t.GroupId == groupId);
         }
 
         public IEnumerable<Settlement> GetSummaryForUser(string userId)
         {
-            var transfers = _transferRepository.GetAllSentAndReceived(userId);
-            var expenses = _expensesRepository.GetAll(userId);
-
-            return GroupTransfersAndExpensesToSummary(userId, transfers, expenses);
+            var user = _unitOfWork.UsersRepository.Get(userId);
+            var transfersSent = user.TransfersSent;
+            var transfersReceived = user.TransfersReceived;
+            var expensesPaid = user.ExpensesPaid;
+            var expensesParticipated = user.ExpensesParticipated;
+            return GroupTransfersAndExpensesToSettlements(userId, transfersSent, transfersReceived, expensesPaid, expensesParticipated);
         }
 
         public IEnumerable<Settlement> GetSummaryForUser(string userId, int groupId)
         {
-            var transfers = _transferRepository.GetAllSentAndReceived(userId, groupId);
-            var expenses = _expensesRepository.GetAll(userId, groupId);
-
-            return GroupTransfersAndExpensesToSummary(userId, transfers, expenses);
+            var user = _unitOfWork.UsersRepository.Get(userId);
+            var transfersSent = user.TransfersSent.Where(t => t.GroupId == groupId);
+            var transfersReceived = user.TransfersReceived.Where(t => t.GroupId == groupId);
+            var expensesPaid = user.ExpensesPaid.Where(e => e.GroupId == groupId);
+            var expensesParticipated = user.ExpensesParticipated.Where(e => e.GroupId == groupId);
+            return GroupTransfersAndExpensesToSettlements(userId, transfersSent, transfersReceived, expensesPaid, expensesParticipated);
         }
 
-        private IEnumerable<Settlement> GroupTransfersAndExpensesToSummary(string userId, IEnumerable<Transfer> transfers, IEnumerable<Expense> expenses)
+        private IEnumerable<Settlement> GroupTransfersAndExpensesToSettlements(
+            string userId, IEnumerable<Transfer> transfersSent,
+            IEnumerable<Transfer> transfersReceived,
+            IEnumerable<Expense> expensesPaid,
+            IEnumerable<Expense> expensesParticipated)
         {
-            var transfersSent = transfers
-                .Where(t => t.SenderId == userId)
-                .GroupBy(t => t.ReceiverId)
-                .Select(tg => new Settlement { Amount = tg.Sum(s => s.Amount), UserId = tg.Key });
+            var sentTransfersPart =
+                    transfersSent
+                        .GroupBy(t => t.ReceiverId)
+                        .Select(tg => new Settlement
+                        {
+                            Amount = tg.Sum(t => t.Amount),
+                            UserId = tg.Key,
+                            UserName = _unitOfWork.UsersRepository.Get(tg.Key).DisplayName
+                        });
 
-            var transfersReceived = transfers
-                .Where(t => t.ReceiverId == userId)
-                .GroupBy(t => t.SenderId)
-                .Select(tg => new Settlement { Amount = -tg.Sum(s => s.Amount), UserId = tg.Key });
+            var receivedTransfersPart =
+                    transfersReceived
+                        .GroupBy(t => t.SenderId)
+                        .Select(tg => new Settlement
+                        {
+                            Amount = -tg.Sum(t => t.Amount),
+                            UserId = tg.Key,
+                            UserName = _unitOfWork.UsersRepository.Get(tg.Key).DisplayName
+                        });
 
-            var expensesPaid = expenses
-                .Where(x => x.UserPayingId == userId);
-            List<Settlement> expensesPaidSettlements = new List<Settlement>();
-            foreach (var exp in expensesPaid)
+            var expensesPaidPart = new List<Settlement>();
+            foreach (var expense in expensesPaid)
             {
-                var amount = exp.Amount / exp.Participants.Count;
-                foreach (var set in exp.Participants.Where(x => x.Id != userId))
+                var amount = expense.Amount / expense.Participants.Count;
+                foreach (var participant in expense.Participants.Where(x => x.Id != userId))
                 {
-                    expensesPaidSettlements.Add(new Settlement { Amount = amount, UserId = set.Id });
+                    expensesPaidPart.Add(new Settlement
+                    {
+                        Amount = amount,
+                        UserId = participant.Id,
+                        UserName = participant.DisplayName
+                    });
                 }
             }
 
-            var expensesParticipated = expenses
-                .Where(x => x.Participants.Select(y => y.Id).Contains(userId))
+            var expensesParticipatedPart = expensesParticipated
                 .Except(expensesPaid)
-                .Select(x => new Settlement { UserId = x.UserPayingId, Amount = -x.Amount / x.Participants.Count });
+                .Select(e => new Settlement
+                {
+                    Amount = -e.Amount / e.Participants.Count,
+                    UserId = e.UserPayingId,
+                    UserName = e.UserPaying.DisplayName
+                });
 
             return
-                 transfersSent
-                .Concat(transfersReceived)
-                .Concat(expensesPaidSettlements)
-                .Concat(expensesParticipated)
-                .GroupBy(x => x.UserId)
-                .Select(x => new Settlement { Amount = x.Sum(y => y.Amount), UserId = x.Key });
+                 sentTransfersPart
+                .Concat(receivedTransfersPart)
+                .Concat(expensesPaidPart)
+                .Concat(expensesParticipatedPart)
+                .GroupBy(s => s.UserId)
+                .Select(ts => new Settlement { Amount = ts.Sum(s => s.Amount), UserId = ts.Key });
         }
 
         public void AddExpense(string userId, int groupId, string description, DateTime date, double amount, IEnumerable<string> participants)
         {
-            var group = _groupService.GetGroup(groupId);
+            var group = _unitOfWork.GroupsRepository.Get(groupId);
             var expense = new Expense
             {
                 UserPayingId = userId,
@@ -117,75 +134,82 @@ namespace Domain.Services
                 Date = date,
                 Amount = amount,
             };
-            expense.Participants = participants.Select(x => _userRepository.GetUser(x)).ToList();
-            _expensesRepository.Add(expense);
-            _expensesRepository.SaveChanges();
+            expense.Participants = participants.Select(u => _unitOfWork.UsersRepository.Get(u)).ToList();
+            _unitOfWork.ExpensesRepository.Add(expense);
+            _unitOfWork.SaveChanges();
         }
 
         public bool EditExpense(string userId, int expenseId, int groupId, string description, DateTime date, double amount, IEnumerable<string> participants)
         {
-            var expense = _expensesRepository.Get(expenseId);
+            var expense = _unitOfWork.ExpensesRepository.Get(expenseId);
 
-            if (expense.UserPayingId != userId) return false;
+            if (expense.UserPayingId != userId)
+            {
+                return false;
+            }
 
             if (expense.GroupId != groupId)
             {
-                expense.Group = _groupService.GetGroup(groupId);
+                expense.Group = _unitOfWork.GroupsRepository.Get(groupId);
                 expense.GroupId = groupId;
             }
+
             expense.Description = description;
             expense.Date = date;
             expense.Amount = amount;
 
-            expense.Participants.AddRange(participants.Select(x => _userRepository.GetUser(x)));
+            expense.Participants.AddRange(participants.Select(u => _unitOfWork.UsersRepository.Get(u)));
             expense.Participants.RemoveAll(x => participants.Contains(x.Id) == false);
 
-            _expensesRepository.Update(expense);
-            _expensesRepository.SaveChanges();
-
+            _unitOfWork.ExpensesRepository.Update(expense);
+            _unitOfWork.SaveChanges();
             return true;
         }
 
         public bool RemoveExpense(string userId, int expenseId)
         {
-            var expense = _expensesRepository.Get(expenseId);
+            var expense = _unitOfWork.ExpensesRepository.Get(expenseId);
 
-            if (expense.UserPayingId != userId) return false;
+            if (expense.UserPayingId != userId)
+            {
+                return false;
+            }
 
-            _expensesRepository.Remove(expense);
-            _expensesRepository.SaveChanges();
-
+            _unitOfWork.ExpensesRepository.Remove(expense);
+            _unitOfWork.SaveChanges();
             return true;
         }
 
-        public void AddTransfer(string userFrom, string userTo, int groupId, string description, DateTime date, double amount)
+        public void AddTransfer(string senderId, string receiverId, int groupId, string description, DateTime date, double amount)
         {
-            var group = _groupService.GetGroup(groupId);
+            var group = _unitOfWork.GroupsRepository.Get(groupId);
             var transfer = new Transfer
             {
                 Amount = amount,
-                Sender = _userRepository.GetUser(userFrom),
-                SenderId = userFrom,
+                Sender = _unitOfWork.UsersRepository.Get(senderId),
+                SenderId = senderId,
                 Date = date,
                 Description = description,
                 Group = group,
                 GroupId = groupId,
-                ReceiverId = userTo,
-                Receiver = _userRepository.GetUser(userTo)
+                ReceiverId = receiverId,
+                Receiver = _unitOfWork.UsersRepository.Get(receiverId)
             };
-            _transferRepository.Add(transfer);
-            _transferRepository.SaveChanges();
+            _unitOfWork.TransfersRepository.Add(transfer);
+            _unitOfWork.SaveChanges();
         }
 
         public bool RemoveTransfer(string userId, int transferId)
         {
-            var transfer = _transferRepository.Get(transferId);
+            var transfer = _unitOfWork.TransfersRepository.Get(transferId);
 
-            if (transfer.SenderId != userId) return false;
+            if (transfer.SenderId != userId)
+            {
+                return false;
+            }
 
-            _transferRepository.Remove(transfer);
-            _transferRepository.SaveChanges();
-
+            _unitOfWork.TransfersRepository.Remove(transfer);
+            _unitOfWork.SaveChanges();
             return true;
         }
     }

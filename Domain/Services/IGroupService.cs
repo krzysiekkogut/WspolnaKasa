@@ -9,11 +9,11 @@ namespace Domain.Services
 
         Group GetGroup(int groupId);
 
-        bool CreateGroup(string name, string secret, string currentUser);
+        bool CreateGroup(string groupName, string secret, string currentUserId);
 
-        void JoinGroup(string name, string secret, string currentUser);
+        void JoinGroup(string groupName, string secret, string currentUserId);
 
-        bool EditGroup(int groupId, string newName);
+        bool EditGroup(int groupId, string newGroupName);
 
         bool RemoveGroup(int groupId, string secret);
     }
