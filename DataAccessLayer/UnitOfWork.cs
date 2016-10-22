@@ -11,8 +11,8 @@ namespace DataAccessLayer
             _dbContext = dbContext;
         }
 
-        private Repository<Expense, int> _expensesRepository;
-        public Repository<Expense, int> ExpensesRepository
+        private IRepository<Expense, int> _expensesRepository;
+        public IRepository<Expense, int> ExpensesRepository
         {
             get
             {
@@ -20,8 +20,8 @@ namespace DataAccessLayer
             }
         }
 
-        private Repository<Group, int> _groupsRepository;
-        public Repository<Group, int> GroupsRepository
+        private IRepository<Group, int> _groupsRepository;
+        public IRepository<Group, int> GroupsRepository
         {
             get
             {
@@ -29,8 +29,8 @@ namespace DataAccessLayer
             }
         }
 
-        private Repository<Transfer, int> _transfersRepository;
-        public Repository<Transfer, int> TransfersRepository
+        private IRepository<Transfer, int> _transfersRepository;
+        public IRepository<Transfer, int> TransfersRepository
         {
             get
             {
@@ -38,8 +38,8 @@ namespace DataAccessLayer
             }
         }
 
-        private Repository<User, string> _usersRepository;
-        public Repository<User, string> UsersRepository
+        private IRepository<User, string> _usersRepository;
+        public IRepository<User, string> UsersRepository
         {
             get
             {

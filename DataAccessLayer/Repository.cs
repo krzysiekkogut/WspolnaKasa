@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace DataAccessLayer
 {
-    public class Repository<TEntity, TId> where TEntity : class
+    public class Repository<TEntity, TId> : IRepository<TEntity, TId> where TEntity : class
     {
         private ApplicationDbContext _dbContext;
         public Repository(ApplicationDbContext dbContext)

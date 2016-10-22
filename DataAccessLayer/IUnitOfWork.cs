@@ -4,10 +4,10 @@ namespace DataAccessLayer
 {
     public interface IUnitOfWork
     {
-        Repository<Group, int> GroupsRepository { get; }
-        Repository<Expense, int> ExpensesRepository { get; }
-        Repository<Transfer, int> TransfersRepository { get; }
-        Repository<User, string> UsersRepository { get; }
+        IRepository<Group, int> GroupsRepository { get; }
+        IRepository<Expense, int> ExpensesRepository { get; }
+        IRepository<Transfer, int> TransfersRepository { get; }
+        IRepository<User, string> UsersRepository { get; }
         void SaveChanges();
     }
 }

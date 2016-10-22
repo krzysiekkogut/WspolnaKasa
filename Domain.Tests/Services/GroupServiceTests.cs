@@ -1,163 +1,230 @@
 ﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using DataAccessLayer.Repositories;
 using Domain.Services;
 using Domain.Entities;
 using Domain.Exceptions;
+using DataAccessLayer;
+using System.Linq;
 
 namespace Domain.Tests.Services
 {
     [TestClass]
     public class GroupServiceTests
     {
-        Mock<IGroupRepository> groupRepositoryMock = new Mock<IGroupRepository>();
-        Mock<IUserRepository> applicationUserRepositoryMock = new Mock<IUserRepository>();
-        GroupService groupService;
+        private Mock<IUnitOfWork> _unitOfWorkMock;
+        private Mock<IRepository<Expense, int>> _expensesRepositoryMock;
+        private Mock<IRepository<Group, int>> _groupsRepositoryMock;
+        private Mock<IRepository<Transfer, int>> _transfersRepositoryMock;
+        private Mock<IRepository<User, string>> _usersRepositoryMock;
+        GroupService _groupService;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            _expensesRepositoryMock = new Mock<IRepository<Expense, int>>();
+            _groupsRepositoryMock = new Mock<IRepository<Group, int>>();
+            _transfersRepositoryMock = new Mock<IRepository<Transfer, int>>();
+            _usersRepositoryMock = new Mock<IRepository<User, string>>();
+            _unitOfWorkMock = new Mock<IUnitOfWork>();
+            _unitOfWorkMock.SetupGet(p => p.ExpensesRepository).Returns(_expensesRepositoryMock.Object);
+            _unitOfWorkMock.SetupGet(p => p.GroupsRepository).Returns(_groupsRepositoryMock.Object);
+            _unitOfWorkMock.SetupGet(p => p.TransfersRepository).Returns(_transfersRepositoryMock.Object);
+            _unitOfWorkMock.SetupGet(p => p.UsersRepository).Returns(_usersRepositoryMock.Object);
+        }
 
         [TestMethod]
         public void GetAllGroups()
         {
-            var userId = "krzysiek";
-            groupService = new GroupService(groupRepositoryMock.Object, applicationUserRepositoryMock.Object);
+            // Arrange
+            var userId = "user";
+            var groups = new List<Group>
+            {
+                new Group { GroupId = 1, Name = "group1" },
+                new Group { GroupId = 2, Name = "group2" }
+            };
+            var user = new User
+            {
+                Id = userId,
+                Groups = groups
+            };
+            _usersRepositoryMock.Setup(m => m.Get(userId)).Returns(user);
+            _groupService = new GroupService(_unitOfWorkMock.Object);
 
-            groupService.GetAllGroups(userId);
+            // Act
+            var result = _groupService.GetAllGroups(userId);
 
-            groupRepositoryMock.Verify(x => x.GetAll(userId), Times.Once());
+            // Assert
+            _usersRepositoryMock.Verify(x => x.Get(userId), Times.Once());
+            Assert.AreEqual(groups, result);
         }
 
         [TestMethod]
         public void CreateGroup_GroupExists()
         {
-            var group = "grupa";
-            var secret = "haslo";
+            // Arrange
+            var group = "group";
+            var secret = "secret";
             var user = "user";
-            groupRepositoryMock.Setup(x => x.Exists(group)).Returns(true);
-            groupService = new GroupService(groupRepositoryMock.Object, applicationUserRepositoryMock.Object);
+            var groups = new List<Group>
+            {
+                new Group { Name = group },
+                new Group { Name = "other group" }
+            }.AsQueryable();
+            _groupsRepositoryMock.Setup(g => g.GetAll()).Returns(groups);
+            _groupService = new GroupService(_unitOfWorkMock.Object);
 
-            var result = groupService.CreateGroup(group, secret, user);
+            // Act
+            var result = _groupService.CreateGroup(group, secret, user);
 
+            // Assert
             Assert.IsFalse(result);
         }
 
         [TestMethod]
         public void CreateGroup()
         {
-            var group = "grupa";
-            var secret = "haslo";
+            // Arrange
+            var group = "group";
+            var secret = "secret";
             var user = "user";
-            groupRepositoryMock.Setup(x => x.Exists(group)).Returns(false);
-            groupService = new GroupService(groupRepositoryMock.Object, applicationUserRepositoryMock.Object);
+            _usersRepositoryMock.Setup(repo => repo.Get(user)).Returns(new User { Id = user });
+            _groupService = new GroupService(_unitOfWorkMock.Object);
 
-            var result = groupService.CreateGroup(group, secret, user);
+            // Act
+            var result = _groupService.CreateGroup(group, secret, user);
 
+            // Assert
             Assert.IsTrue(result);
-            groupRepositoryMock.Verify(x => x.Add(new Group { Name = group, Secret = secret }), Times.Once());
-            groupRepositoryMock.Verify(x => x.SaveChanges(), Times.Once());
+            _groupsRepositoryMock.Verify(repo => repo.Add(It.Is<Group>(
+                g => g.Name == group
+                && g.Secret == secret
+                && g.Members.Any(u => u.Id == user))),
+                Times.Once());
+            _unitOfWorkMock.Verify(x => x.SaveChanges(), Times.Once());
         }
 
         [TestMethod]
         [ExpectedException(typeof(GroupNotFoundException))]
         public void JoinGroup_GroupDoesNotExists()
         {
-            var group = "grupa";
-            var secret = "haslo";
+            // Arrange
+            var group = "group";
+            var secret = "secret";
             var user = "user";
-            groupRepositoryMock.Setup(x => x.Exists(group)).Returns(false);
-            groupService = new GroupService(groupRepositoryMock.Object, applicationUserRepositoryMock.Object);
+            _groupsRepositoryMock.Setup(repo => repo.GetAll()).Returns(new List<Group> { new Group { Name = "other group" } }.AsQueryable());
+            _groupService = new GroupService(_unitOfWorkMock.Object);
 
-            groupService.JoinGroup(group, secret, user);
+            // Act
+            _groupService.JoinGroup(group, secret, user);
         }
 
         [TestMethod]
         [ExpectedException(typeof(WrongGroupPasswordException))]
         public void JoinGroup_GroupHasDifferentPassword()
         {
-            var group = "grupa";
-            var secret = "haslo";
+            // Arrange
+            var group = "group";
+            var secret = "secret";
             var user = "user";
-            groupRepositoryMock.Setup(x => x.Exists(group)).Returns(true);
-            groupRepositoryMock.Setup(x => x.Get(group)).Returns(new Group { Name = group, Secret = "olsah" });
-            groupService = new GroupService(groupRepositoryMock.Object, applicationUserRepositoryMock.Object);
+            _groupsRepositoryMock.Setup(repo => repo.GetAll()).Returns(new List<Group> { new Group { Name = group, Secret = "other secret" } }.AsQueryable());
+            _groupService = new GroupService(_unitOfWorkMock.Object);
 
-            groupService.JoinGroup(group, secret, user);
+            // Act
+            _groupService.JoinGroup(group, secret, user);
         }
 
         [TestMethod]
         public void JoinGroup()
         {
-            var group = "grupa";
-            var secret = "haslo";
+            // Arrange
+            var group = "group";
+            var secret = "secret";
             var user = "user";
-            var groupObject = new Group { Name = group, Secret = secret, Members = new List<User>() };
-            groupRepositoryMock.Setup(x => x.Exists(group)).Returns(true);
-            groupRepositoryMock.Setup(x => x.Get(group)).Returns(groupObject);
-            applicationUserRepositoryMock.Setup(x => x.GetUser(user)).Returns(new User { Id = user });
-            groupService = new GroupService(groupRepositoryMock.Object, applicationUserRepositoryMock.Object);
+            var groupObject = new Group { Name = group, Secret = secret };
+            _groupsRepositoryMock.Setup(repo => repo.GetAll()).Returns(new List<Group> { groupObject }.AsQueryable());
+            _usersRepositoryMock.Setup(repo => repo.Get(user)).Returns(new User { Id = user });
+            _groupService = new GroupService(_unitOfWorkMock.Object);
 
-            groupService.JoinGroup(group, secret, user);
+            // Act
+            _groupService.JoinGroup(group, secret, user);
 
-            groupRepositoryMock.Verify(x => x.Update(groupObject), Times.Once());
-            groupRepositoryMock.Verify(x => x.SaveChanges(), Times.Once());
+            // Assert
+            _groupsRepositoryMock.Verify(x => x.Update(It.Is<Group>(
+                g => g.Name == group 
+                && g.Secret == secret 
+                && g.Members.Any(u => u.Id == user))),
+                Times.Once());
+            _unitOfWorkMock.Verify(x => x.SaveChanges(), Times.Once());
         }
 
         [TestMethod]
         public void EditGroup_NewNameHasTakenGroupName()
         {
+            // Arrange
             var newName = "notSoNew";
-            groupRepositoryMock.Setup(x => x.Exists(newName)).Returns(true);
-            groupService = new GroupService(groupRepositoryMock.Object, applicationUserRepositoryMock.Object);
+            _groupsRepositoryMock.Setup(repo => repo.GetAll()).Returns(new List<Group> { new Group { Name = newName } }.AsQueryable());
+            _groupService = new GroupService(_unitOfWorkMock.Object);
 
-            var result = groupService.EditGroup(1, newName);
+            // Act
+            var result = _groupService.EditGroup(1, newName);
 
+            // Assert
             Assert.IsFalse(result);
         }
 
         [TestMethod]
         public void EditGroup()
         {
+            // Arrange
             var id = 1;
             var newName = "newName";
-            var original = new Group { GroupId = id, Name = "oldName" };
-            var updated = new Group { GroupId = id, Name = newName };
-            groupRepositoryMock.Setup(x => x.Exists(newName)).Returns(false);
-            groupRepositoryMock.Setup(x => x.Get(id)).Returns(original);
-            groupService = new GroupService(groupRepositoryMock.Object, applicationUserRepositoryMock.Object);
+            var originalGroup = new Group { GroupId = id, Name = "oldName" };
+            _groupsRepositoryMock.Setup(repo => repo.Get(id)).Returns(originalGroup);
+            _groupService = new GroupService(_unitOfWorkMock.Object);
 
-            var result = groupService.EditGroup(id, newName);
+            // Act
+            var result = _groupService.EditGroup(id, newName);
 
+            // Assert
             Assert.IsTrue(result);
-            groupRepositoryMock.Verify(x => x.Update(updated), Times.Once());
-            groupRepositoryMock.Verify(x => x.SaveChanges(), Times.Once());
+            _groupsRepositoryMock.Verify(x => x.Update(It.Is<Group>(g => g.Name == newName)), Times.Once());
+            _unitOfWorkMock.Verify(x => x.SaveChanges(), Times.Once());
         }
 
         [TestMethod]
         public void RemoveGroup_WrongPassword()
         {
+            // Arrange
             var groupId = 1;
             var secret = "secret";
-            groupRepositoryMock.Setup(x => x.Get(groupId)).Returns(new Group { GroupId = groupId, Secret = "terces" });
-            groupService = new GroupService(groupRepositoryMock.Object, applicationUserRepositoryMock.Object);
+            _groupsRepositoryMock.Setup(x => x.Get(groupId)).Returns(new Group { GroupId = groupId, Secret = "terces" });
+            _groupService = new GroupService(_unitOfWorkMock.Object);
 
-            var result = groupService.RemoveGroup(groupId, secret);
+            // Act
+            var result = _groupService.RemoveGroup(groupId, secret);
 
+            // Assert
             Assert.IsFalse(result);
         }
 
         [TestMethod]
         public void RemoveGroup()
         {
+            // Arrange
             var groupId = 1;
             var secret = "secret";
             var group = new Group { GroupId = groupId, Secret = secret };
-            groupRepositoryMock.Setup(x => x.Get(groupId)).Returns(group);
-            groupService = new GroupService(groupRepositoryMock.Object, applicationUserRepositoryMock.Object);
+            _groupsRepositoryMock.Setup(x => x.Get(groupId)).Returns(group);
+            _groupService = new GroupService(_unitOfWorkMock.Object);
 
-            var result = groupService.RemoveGroup(groupId, secret);
+            // Act
+            var result = _groupService.RemoveGroup(groupId, secret);
 
+            // Assert
             Assert.IsTrue(result);
-            groupRepositoryMock.Verify(x => x.Remove(group), Times.Once());
-            groupRepositoryMock.Verify(x => x.SaveChanges(), Times.Once());
+            _groupsRepositoryMock.Verify(x => x.Remove(group), Times.Once());
+            _unitOfWorkMock.Verify(x => x.SaveChanges(), Times.Once());
         }
     }
 }

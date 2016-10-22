@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using DataAccessLayer.Repositories;
+using DataAccessLayer;
 using Domain.Services;
 using Domain.Entities;
 using Domain.Models;
@@ -89,7 +89,7 @@ namespace ExpensesDomain.Tests.Services
 
             transferRepository
                 .Setup(x => x.GetAllSentAndReceived(currentUser))
-                .Returns(new List<Transfer> 
+                .Returns(new List<Transfer>
                 {
                     new Transfer { Amount = 100, ReceiverId = otherUser, SenderId = currentUser }
                 });
@@ -107,7 +107,7 @@ namespace ExpensesDomain.Tests.Services
 
             transferRepository
                 .Setup(x => x.GetAllSentAndReceived(currentUser))
-                .Returns(new List<Transfer> 
+                .Returns(new List<Transfer>
                 {
                     new Transfer { Amount = 50, ReceiverId = otherUser, SenderId = currentUser },
                     new Transfer { Amount = 50, ReceiverId = otherUser, SenderId = currentUser }
@@ -127,7 +127,7 @@ namespace ExpensesDomain.Tests.Services
 
             transferRepository
                 .Setup(x => x.GetAllSentAndReceived(currentUser))
-                .Returns(new List<Transfer> 
+                .Returns(new List<Transfer>
                 {
                     new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
                     new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
@@ -154,7 +154,7 @@ namespace ExpensesDomain.Tests.Services
 
             transferRepository
                 .Setup(x => x.GetAllSentAndReceived(currentUser))
-                .Returns(new List<Transfer> 
+                .Returns(new List<Transfer>
                 {
                     new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
                     new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
@@ -182,7 +182,7 @@ namespace ExpensesDomain.Tests.Services
 
             transferRepository
                 .Setup(x => x.GetAllSentAndReceived(currentUser))
-                .Returns(new List<Transfer> 
+                .Returns(new List<Transfer>
                 {
                     new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
                     new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
@@ -194,7 +194,7 @@ namespace ExpensesDomain.Tests.Services
                 .Returns(new List<Expense>
                 {
                     new Expense
-                    { 
+                    {
                         Amount = 30, UserPayingId = currentUser, Participants = new List<User>
                         {
                             new User { Id = currentUser },
@@ -224,7 +224,7 @@ namespace ExpensesDomain.Tests.Services
 
             transferRepository
                 .Setup(x => x.GetAllSentAndReceived(currentUser))
-                .Returns(new List<Transfer> 
+                .Returns(new List<Transfer>
                 {
                     new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
                     new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser },
@@ -237,16 +237,16 @@ namespace ExpensesDomain.Tests.Services
                 {
                     new Expense
                     {
-                        Amount = 30, UserPayingId = currentUser, Participants = new List<User> 
+                        Amount = 30, UserPayingId = currentUser, Participants = new List<User>
                         {
                             new User { Id = currentUser },
                             new User { Id = otherUser1 },
                             new User { Id = otherUser2 }
                         }
                     },
-                    new Expense 
-                    { 
-                        Amount = 75, UserPayingId = otherUser1, Participants = new List<User> 
+                    new Expense
+                    {
+                        Amount = 75, UserPayingId = otherUser1, Participants = new List<User>
                         {
                             new User { Id = currentUser },
                             new User { Id = otherUser1 },
@@ -275,7 +275,7 @@ namespace ExpensesDomain.Tests.Services
             var filteredGroup = 1;
             transferRepository
                 .Setup(x => x.GetAllSentAndReceived(currentUser, filteredGroup))
-                .Returns(new List<Transfer> 
+                .Returns(new List<Transfer>
                 {
                     new Transfer { Amount = 50, ReceiverId = otherUser1, SenderId = currentUser, GroupId = filteredGroup },
                     new Transfer { Amount = 66, ReceiverId = otherUser2, SenderId = currentUser, GroupId = filteredGroup }
@@ -286,14 +286,14 @@ namespace ExpensesDomain.Tests.Services
                 {
                     new Expense
                     {
-                        Amount = 30, UserPayingId = currentUser, Participants = new List<User> 
+                        Amount = 30, UserPayingId = currentUser, Participants = new List<User>
                         {
                             new User { Id = currentUser },
                             new User { Id = otherUser1 },
                             new User { Id = otherUser2 }
                         },
                         GroupId = filteredGroup
-                    }                   
+                    }
                 });
 
             var result = transactionService.GetSummaryForUser(currentUser, filteredGroup);
@@ -427,7 +427,7 @@ namespace ExpensesDomain.Tests.Services
                 UserPayingId = "otherUser",
                 ExpenseId = expenseId
             };
-            userRepository.Setup(x => x.GetUser(It.IsAny<string>())).Returns(new User { Id = "1" });            
+            userRepository.Setup(x => x.GetUser(It.IsAny<string>())).Returns(new User { Id = "1" });
             expensesRepository.Setup(x => x.Get(expenseId)).Returns(expenseOriginal);
 
             var result = transactionService.EditExpense(userId, expenseId, groupId, description, date, amount, participants);
