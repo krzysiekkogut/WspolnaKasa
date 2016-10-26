@@ -4,6 +4,7 @@ using System;
 using Domain.Entities;
 using Domain.Models;
 using DataAccessLayer;
+using Domain.Exceptions;
 
 namespace Domain.Services
 {
@@ -75,8 +76,7 @@ namespace Domain.Services
                         .Select(tg => new Settlement
                         {
                             Amount = tg.Sum(t => t.Amount),
-                            UserId = tg.Key,
-                            UserName = _unitOfWork.UsersRepository.Get(tg.Key).DisplayName
+                            User = tg.First().Receiver
                         });
 
             var receivedTransfersPart =
@@ -85,8 +85,7 @@ namespace Domain.Services
                         .Select(tg => new Settlement
                         {
                             Amount = -tg.Sum(t => t.Amount),
-                            UserId = tg.Key,
-                            UserName = _unitOfWork.UsersRepository.Get(tg.Key).DisplayName
+                            User = tg.First().Sender
                         });
 
             var expensesPaidPart = new List<Settlement>();
@@ -98,8 +97,7 @@ namespace Domain.Services
                     expensesPaidPart.Add(new Settlement
                     {
                         Amount = amount,
-                        UserId = participant.Id,
-                        UserName = participant.DisplayName
+                        User = participant
                     });
                 }
             }
@@ -109,8 +107,7 @@ namespace Domain.Services
                 .Select(e => new Settlement
                 {
                     Amount = -e.Amount / e.Participants.Count,
-                    UserId = e.UserPayingId,
-                    UserName = e.UserPaying.DisplayName
+                    User = e.UserPaying
                 });
 
             return
@@ -118,13 +115,23 @@ namespace Domain.Services
                 .Concat(receivedTransfersPart)
                 .Concat(expensesPaidPart)
                 .Concat(expensesParticipatedPart)
-                .GroupBy(s => s.UserId)
-                .Select(ts => new Settlement { Amount = ts.Sum(s => s.Amount), UserId = ts.Key });
+                .GroupBy(s => s.User.Id)
+                .Select(ts => new Settlement
+                {
+                    Amount = ts.Sum(s => s.Amount),
+                    User = ts.First().User
+                });
         }
 
         public void AddExpense(string userId, int groupId, string description, DateTime date, double amount, IEnumerable<string> participants)
         {
             var group = _unitOfWork.GroupsRepository.Get(groupId);
+
+            if (!CheckIfParticipantsAreGroupMembers(participants, group))
+            {
+                throw new ExpenseParticipantsMustBeGroupMembersExecption();
+            }
+
             var expense = new Expense
             {
                 UserPayingId = userId,
@@ -139,18 +146,29 @@ namespace Domain.Services
             _unitOfWork.SaveChanges();
         }
 
-        public bool EditExpense(string userId, int expenseId, int groupId, string description, DateTime date, double amount, IEnumerable<string> participants)
+        private bool CheckIfParticipantsAreGroupMembers(IEnumerable<string> participants, Group group)
+        {
+            var membersId = group.Members.Select(m => m.Id).OrderBy(id => id);
+            return participants.All(p => membersId.Contains(p));
+        }
+
+        public void EditExpense(string userId, int expenseId, int groupId, string description, DateTime date, double amount, IEnumerable<string> participants)
         {
             var expense = _unitOfWork.ExpensesRepository.Get(expenseId);
 
             if (expense.UserPayingId != userId)
             {
-                return false;
+                throw new CannotEditOtherUsersExpensesException();
             }
 
             if (expense.GroupId != groupId)
             {
-                expense.Group = _unitOfWork.GroupsRepository.Get(groupId);
+                var group = _unitOfWork.GroupsRepository.Get(groupId);
+                if (!CheckIfParticipantsAreGroupMembers(participants, group))
+                {
+                    throw new ExpenseParticipantsMustBeGroupMembersExecption();
+                }
+                expense.Group = group;
                 expense.GroupId = groupId;
             }
 
@@ -159,25 +177,23 @@ namespace Domain.Services
             expense.Amount = amount;
 
             expense.Participants.AddRange(participants.Select(u => _unitOfWork.UsersRepository.Get(u)));
-            expense.Participants.RemoveAll(x => participants.Contains(x.Id) == false);
+            expense.Participants.RemoveAll(x => !participants.Contains(x.Id));
 
             _unitOfWork.ExpensesRepository.Update(expense);
             _unitOfWork.SaveChanges();
-            return true;
         }
 
-        public bool RemoveExpense(string userId, int expenseId)
+        public void RemoveExpense(string userId, int expenseId)
         {
             var expense = _unitOfWork.ExpensesRepository.Get(expenseId);
 
             if (expense.UserPayingId != userId)
             {
-                return false;
+                throw new CannotEditOtherUsersExpensesException();
             }
 
             _unitOfWork.ExpensesRepository.Remove(expense);
             _unitOfWork.SaveChanges();
-            return true;
         }
 
         public void AddTransfer(string senderId, string receiverId, int groupId, string description, DateTime date, double amount)
@@ -199,18 +215,17 @@ namespace Domain.Services
             _unitOfWork.SaveChanges();
         }
 
-        public bool RemoveTransfer(string userId, int transferId)
+        public void RemoveTransfer(string userId, int transferId)
         {
             var transfer = _unitOfWork.TransfersRepository.Get(transferId);
 
             if (transfer.SenderId != userId)
             {
-                return false;
+                throw new CannotEditOtherUsersTransfersException();
             }
 
             _unitOfWork.TransfersRepository.Remove(transfer);
             _unitOfWork.SaveChanges();
-            return true;
         }
     }
 }

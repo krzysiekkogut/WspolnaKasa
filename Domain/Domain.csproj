@@ -61,6 +61,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\CannotEditOtherUsersExpensesException.cs" />
+    <Compile Include="Exceptions\CannotEditOtherUsersTransfersException.cs" />
+    <Compile Include="Exceptions\ExpenseParticipantsMustBeGroupMembersExecption.cs" />
+    <Compile Include="Exceptions\GroupAlreadyExistsException.cs" />
     <Compile Include="Models\Settlement.cs" />
     <Compile Include="Exceptions\GroupNotFoundException.cs" />
     <Compile Include="Exceptions\WrongGroupPasswordException.cs" />

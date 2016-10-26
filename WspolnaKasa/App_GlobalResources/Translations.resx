@@ -207,6 +207,9 @@
   <data name="Dashboard_EditGroup" xml:space="preserve">
     <value>Edytuj grupę</value>
   </data>
+  <data name="Dashboard_ExpenseParticipantsMustBeGroupMembers" xml:space="preserve">
+    <value>Uczestnicy wydatku muszą należeć do grupy.</value>
+  </data>
   <data name="Dashboard_Group" xml:space="preserve">
     <value>Grupa</value>
   </data>

@@ -31,6 +31,7 @@ namespace Domain.Tests.Services
             _unitOfWorkMock.SetupGet(p => p.GroupsRepository).Returns(_groupsRepositoryMock.Object);
             _unitOfWorkMock.SetupGet(p => p.TransfersRepository).Returns(_transfersRepositoryMock.Object);
             _unitOfWorkMock.SetupGet(p => p.UsersRepository).Returns(_usersRepositoryMock.Object);
+            _groupService = new GroupService(_unitOfWorkMock.Object);
         }
 
         [TestMethod]
@@ -49,7 +50,6 @@ namespace Domain.Tests.Services
                 Groups = groups
             };
             _usersRepositoryMock.Setup(m => m.Get(userId)).Returns(user);
-            _groupService = new GroupService(_unitOfWorkMock.Object);
 
             // Act
             var result = _groupService.GetAllGroups(userId);
@@ -60,6 +60,7 @@ namespace Domain.Tests.Services
         }
 
         [TestMethod]
+        [ExpectedException(typeof(GroupAlreadyExistsException))]
         public void CreateGroup_GroupExists()
         {
             // Arrange
@@ -72,13 +73,9 @@ namespace Domain.Tests.Services
                 new Group { Name = "other group" }
             }.AsQueryable();
             _groupsRepositoryMock.Setup(g => g.GetAll()).Returns(groups);
-            _groupService = new GroupService(_unitOfWorkMock.Object);
 
             // Act
-            var result = _groupService.CreateGroup(group, secret, user);
-
-            // Assert
-            Assert.IsFalse(result);
+            _groupService.CreateGroup(group, secret, user);
         }
 
         [TestMethod]
@@ -89,13 +86,11 @@ namespace Domain.Tests.Services
             var secret = "secret";
             var user = "user";
             _usersRepositoryMock.Setup(repo => repo.Get(user)).Returns(new User { Id = user });
-            _groupService = new GroupService(_unitOfWorkMock.Object);
 
             // Act
-            var result = _groupService.CreateGroup(group, secret, user);
+            _groupService.CreateGroup(group, secret, user);
 
             // Assert
-            Assert.IsTrue(result);
             _groupsRepositoryMock.Verify(repo => repo.Add(It.Is<Group>(
                 g => g.Name == group
                 && g.Secret == secret
@@ -113,7 +108,6 @@ namespace Domain.Tests.Services
             var secret = "secret";
             var user = "user";
             _groupsRepositoryMock.Setup(repo => repo.GetAll()).Returns(new List<Group> { new Group { Name = "other group" } }.AsQueryable());
-            _groupService = new GroupService(_unitOfWorkMock.Object);
 
             // Act
             _groupService.JoinGroup(group, secret, user);
@@ -128,7 +122,6 @@ namespace Domain.Tests.Services
             var secret = "secret";
             var user = "user";
             _groupsRepositoryMock.Setup(repo => repo.GetAll()).Returns(new List<Group> { new Group { Name = group, Secret = "other secret" } }.AsQueryable());
-            _groupService = new GroupService(_unitOfWorkMock.Object);
 
             // Act
             _groupService.JoinGroup(group, secret, user);
@@ -144,7 +137,6 @@ namespace Domain.Tests.Services
             var groupObject = new Group { Name = group, Secret = secret };
             _groupsRepositoryMock.Setup(repo => repo.GetAll()).Returns(new List<Group> { groupObject }.AsQueryable());
             _usersRepositoryMock.Setup(repo => repo.Get(user)).Returns(new User { Id = user });
-            _groupService = new GroupService(_unitOfWorkMock.Object);
 
             // Act
             _groupService.JoinGroup(group, secret, user);
@@ -159,18 +151,15 @@ namespace Domain.Tests.Services
         }
 
         [TestMethod]
-        public void EditGroup_NewNameHasTakenGroupName()
+        [ExpectedException(typeof(GroupAlreadyExistsException))]
+        public void EditGroup_NewNameHasExistingGroupName()
         {
             // Arrange
             var newName = "notSoNew";
             _groupsRepositoryMock.Setup(repo => repo.GetAll()).Returns(new List<Group> { new Group { Name = newName } }.AsQueryable());
-            _groupService = new GroupService(_unitOfWorkMock.Object);
 
             // Act
-            var result = _groupService.EditGroup(1, newName);
-
-            // Assert
-            Assert.IsFalse(result);
+            _groupService.EditGroup(1, newName);
         }
 
         [TestMethod]
@@ -181,31 +170,26 @@ namespace Domain.Tests.Services
             var newName = "newName";
             var originalGroup = new Group { GroupId = id, Name = "oldName" };
             _groupsRepositoryMock.Setup(repo => repo.Get(id)).Returns(originalGroup);
-            _groupService = new GroupService(_unitOfWorkMock.Object);
 
             // Act
-            var result = _groupService.EditGroup(id, newName);
+            _groupService.EditGroup(id, newName);
 
             // Assert
-            Assert.IsTrue(result);
             _groupsRepositoryMock.Verify(x => x.Update(It.Is<Group>(g => g.Name == newName)), Times.Once());
             _unitOfWorkMock.Verify(x => x.SaveChanges(), Times.Once());
         }
 
         [TestMethod]
+        [ExpectedException(typeof(WrongGroupPasswordException))]
         public void RemoveGroup_WrongPassword()
         {
             // Arrange
             var groupId = 1;
             var secret = "secret";
             _groupsRepositoryMock.Setup(x => x.Get(groupId)).Returns(new Group { GroupId = groupId, Secret = "terces" });
-            _groupService = new GroupService(_unitOfWorkMock.Object);
 
             // Act
-            var result = _groupService.RemoveGroup(groupId, secret);
-
-            // Assert
-            Assert.IsFalse(result);
+            _groupService.RemoveGroup(groupId, secret);
         }
 
         [TestMethod]
@@ -216,13 +200,11 @@ namespace Domain.Tests.Services
             var secret = "secret";
             var group = new Group { GroupId = groupId, Secret = secret };
             _groupsRepositoryMock.Setup(x => x.Get(groupId)).Returns(group);
-            _groupService = new GroupService(_unitOfWorkMock.Object);
 
             // Act
-            var result = _groupService.RemoveGroup(groupId, secret);
+            _groupService.RemoveGroup(groupId, secret);
 
             // Assert
-            Assert.IsTrue(result);
             _groupsRepositoryMock.Verify(x => x.Remove(group), Times.Once());
             _unitOfWorkMock.Verify(x => x.SaveChanges(), Times.Once());
         }

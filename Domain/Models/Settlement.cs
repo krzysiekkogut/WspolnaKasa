@@ -1,12 +1,12 @@
-﻿namespace Domain.Models
+﻿using Domain.Entities;
+
+namespace Domain.Models
 {
     public class Settlement
     {
         public double Amount { get; set; }
 
-        public string UserId { get; set; }
-
-        public string UserName { get; set; }
+        public User User { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -14,15 +14,14 @@
             if (settlement != null)
             {
                 return Amount == settlement.Amount
-                    && UserId == settlement.UserId
-                    && UserName == settlement.UserName;
+                    && User.Id == settlement.User.Id;
             }
             return false;
         }
 
         public override int GetHashCode()
         {
-            return $"{Amount}{UserId}{UserName}".GetHashCode();
+            return $"{Amount}{User.Id}".GetHashCode();
         }
     }
 }

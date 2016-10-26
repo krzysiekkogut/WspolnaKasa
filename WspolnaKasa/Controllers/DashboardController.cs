@@ -45,8 +45,8 @@ namespace WspolnaKasa.Controllers
                             .Select(s => new SingleSettlementViewModel
                             {
                                 Amount = Math.Round(s.Amount, 2),
-                                UserId = s.UserId,
-                                UserName = s.UserName
+                                UserId = s.User.Id,
+                                UserName = s.User.DisplayName
                             })
                             .Where(s => s.Amount != 0)
                     }));
@@ -59,7 +59,7 @@ namespace WspolnaKasa.Controllers
                 .Select(s => new SingleSettlementViewModel
                 {
                     Amount = Math.Round(s.Amount, 2),
-                    UserName = s.UserName
+                    UserName = s.User.DisplayName
                 });
             return PartialView(
                 new SummaryViewModel
@@ -68,7 +68,7 @@ namespace WspolnaKasa.Controllers
                     TotalAmount = settlements.Sum(x => x.Amount)
                 });
         }
-        
+
         // TODO: get rid of -1
         public PartialViewResult _Expenses(int id = -1)
         {
@@ -164,7 +164,6 @@ namespace WspolnaKasa.Controllers
             return PartialView("_MembersSelect", members);
         }
 
-        // TODO: split to two methods
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateJoinGroup(CreateJoinGroupViewModel model, string CreateOrJoin)
@@ -174,35 +173,34 @@ namespace WspolnaKasa.Controllers
                 return Index();
             }
 
-            switch (CreateOrJoin)
+            try
             {
-                case "Create":
-                    var result = _groupService.CreateGroup(model.Name, model.Secret, User.Identity.GetUserId());
-                    if (!result)
-                    {
-                        ModelState.AddModelError("", Translations.Dashboard_GroupAlreadyExists);
-                        return Index();
-                    }
-                    break;
-                case "Join":
-                    try
-                    {
+                switch (CreateOrJoin)
+                {
+                    case "Create":
+                        _groupService.CreateGroup(model.Name, model.Secret, User.Identity.GetUserId());
+                        break;
+                    case "Join":
                         _groupService.JoinGroup(model.Name, model.Secret, User.Identity.GetUserId());
-                    }
-                    catch (GroupNotFoundException)
-                    {
-                        ModelState.AddModelError("", Translations.Dashboard_GroupDoesNotExist);
-                        return Index();
-                    }
-                    catch (WrongGroupPasswordException)
-                    {
-                        ModelState.AddModelError("", Translations.Dashboard_IncorrectGroupSecret);
-                        return Index();
-                    }
-                    break;
+                        break;
+                }
+                return RedirectToAction("Index");
             }
-
-            return RedirectToAction("Index");
+            catch (GroupAlreadyExistsException)
+            {
+                ModelState.AddModelError("", Translations.Dashboard_GroupAlreadyExists);
+                return Index();
+            }
+            catch (GroupNotFoundException)
+            {
+                ModelState.AddModelError("", Translations.Dashboard_GroupDoesNotExist);
+                return Index();
+            }
+            catch (WrongGroupPasswordException)
+            {
+                ModelState.AddModelError("", Translations.Dashboard_IncorrectGroupSecret);
+                return Index();
+            }
         }
 
         [HttpPost]
@@ -214,14 +212,16 @@ namespace WspolnaKasa.Controllers
                 return Index();
             }
 
-            var result = _groupService.EditGroup(model.GroupId, model.NewName);
-            if (!result)
+            try
+            {
+                _groupService.EditGroup(model.GroupId, model.NewName);
+                return RedirectToAction("Index");
+            }
+            catch (GroupAlreadyExistsException)
             {
                 ModelState.AddModelError("", Translations.Dashboard_GroupAlreadyExists);
                 return Index();
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -233,14 +233,16 @@ namespace WspolnaKasa.Controllers
                 return Index();
             }
 
-            var result = _groupService.RemoveGroup(model.GroupId, model.Secret);
-            if (!result)
+            try
+            {
+                _groupService.RemoveGroup(model.GroupId, model.Secret);
+                return RedirectToAction("Index");
+            }
+            catch (WrongGroupPasswordException)
             {
                 ModelState.AddModelError("", Translations.Dashboard_IncorrectGroupSecret);
                 return Index();
             }
-
-            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -283,7 +285,9 @@ namespace WspolnaKasa.Controllers
                 return Index();
             }
 
-            var result = _transactionService.EditExpense(
+            try
+            {
+            _transactionService.EditExpense(
                 User.Identity.GetUserId(),
                 model.ExpenseId,
                 model.GroupId,
@@ -291,13 +295,18 @@ namespace WspolnaKasa.Controllers
                 model.Date,
                 Math.Round(model.Amount, 2),
                 model.Participants);
-            if (!result)
+                return RedirectToAction("Index");
+            }
+            catch (CannotEditOtherUsersExpensesException)
             {
                 ModelState.AddModelError("", Translations.Dashboard_CannotEditOthersExpenses);
                 return Index();
             }
-
-            return RedirectToAction("Index");
+            catch(ExpenseParticipantsMustBeGroupMembersExecption)
+            {
+                ModelState.AddModelError("", Translations.Dashboard_ExpenseParticipantsMustBeGroupMembers);
+                return Index();
+            }
         }
 
         [HttpPost]
@@ -309,8 +318,11 @@ namespace WspolnaKasa.Controllers
                 return Index();
             }
 
-            var result = _transactionService.RemoveExpense(User.Identity.GetUserId(), model.ExpenseId);
-            if (!result)
+            try
+            {
+                _transactionService.RemoveExpense(User.Identity.GetUserId(), model.ExpenseId);
+            }
+            catch(CannotEditOtherUsersExpensesException)
             {
                 ModelState.AddModelError("", Translations.Dashboard_CannotRemoveOthersExpenses);
                 return Index();
@@ -347,8 +359,11 @@ namespace WspolnaKasa.Controllers
                 return Index();
             }
 
-            var result = _transactionService.RemoveTransfer(User.Identity.GetUserId(), model.TransferId);
-            if (!result)
+            try
+            {
+                _transactionService.RemoveTransfer(User.Identity.GetUserId(), model.TransferId);
+            }
+            catch(CannotEditOtherUsersTransfersException)
             {
                 ModelState.AddModelError("", Translations.Dashboard_CannotRemoveOthersTransfers);
                 return Index();

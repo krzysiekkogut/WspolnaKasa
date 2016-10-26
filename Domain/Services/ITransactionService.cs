@@ -23,12 +23,12 @@ namespace Domain.Services
 
         void AddExpense(string userId, int groupId, string description, DateTime date, double amount, IEnumerable<string> participants);
 
-        bool EditExpense(string userId, int expenseId, int groupId, string description, DateTime date, double amount, IEnumerable<string> participants);
+        void EditExpense(string userId, int expenseId, int groupId, string description, DateTime date, double amount, IEnumerable<string> participants);
 
-        bool RemoveExpense(string userId, int expenseId);
+        void RemoveExpense(string userId, int expenseId);
 
         void AddTransfer(string userFrom, string userTo, int groupId, string description, DateTime date, double amount);
 
-        bool RemoveTransfer(string userId, int transferId);
+        void RemoveTransfer(string userId, int transferId);
     }
 }

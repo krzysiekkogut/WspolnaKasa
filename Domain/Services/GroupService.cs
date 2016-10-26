@@ -25,11 +25,11 @@ namespace Domain.Services
             return _unitOfWork.GroupsRepository.Get(groupId);
         }
 
-        public bool CreateGroup(string groupName, string secret, string currentUserId)
+        public void CreateGroup(string groupName, string secret, string currentUserId)
         {
             if (GroupExists(groupName))
             {
-                return false;
+                throw new GroupAlreadyExistsException();
             }
 
             var group = new Group
@@ -40,8 +40,6 @@ namespace Domain.Services
             group.Members.Add(_unitOfWork.UsersRepository.Get(currentUserId));
             _unitOfWork.GroupsRepository.Add(group);
             _unitOfWork.SaveChanges();
-            
-            return true;
         }
 
         public void JoinGroup(string groupName, string secret, string currentUserId)
@@ -62,31 +60,29 @@ namespace Domain.Services
             _unitOfWork.SaveChanges();
         }
         
-        public bool EditGroup(int groupId, string newGroupName)
+        public void EditGroup(int groupId, string newGroupName)
         {
             if (GroupExists(newGroupName))
             {
-                return false;
+                throw new GroupAlreadyExistsException();
             }
 
             var group = _unitOfWork.GroupsRepository.Get(groupId);
             group.Name = newGroupName;
             _unitOfWork.GroupsRepository.Update(group);
             _unitOfWork.SaveChanges();
-            return true;
         }
 
-        public bool RemoveGroup(int groupId, string secret)
+        public void RemoveGroup(int groupId, string secret)
         {
             var group = _unitOfWork.GroupsRepository.Get(groupId);
             if (group.Secret != secret)
             {
-                return false;
+                throw new WrongGroupPasswordException();
             }
 
             _unitOfWork.GroupsRepository.Remove(group);
             _unitOfWork.SaveChanges();
-            return true;
         }
 
         private bool GroupExists(string name)

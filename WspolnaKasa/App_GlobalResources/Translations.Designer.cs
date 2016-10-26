@@ -331,6 +331,15 @@ namespace WspolnaKasa.App_GlobalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uczestnicy wydatku muszą należeć do grupy..
+        /// </summary>
+        public static string Dashboard_ExpenseParticipantsMustBeGroupMembers {
+            get {
+                return ResourceManager.GetString("Dashboard_ExpenseParticipantsMustBeGroupMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Grupa.
         /// </summary>
         public static string Dashboard_Group {
