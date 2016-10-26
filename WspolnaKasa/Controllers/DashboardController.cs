@@ -69,7 +69,6 @@ namespace WspolnaKasa.Controllers
                 });
         }
 
-        // TODO: get rid of -1
         public PartialViewResult _Expenses(int id = -1)
         {
             if (id == -1)
@@ -107,7 +106,6 @@ namespace WspolnaKasa.Controllers
             }
         }
 
-        // TODO: get rid of -1
         public PartialViewResult _Transfers(int id = -1)
         {
             if (id == -1)
