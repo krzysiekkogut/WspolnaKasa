@@ -9,12 +9,10 @@ namespace Domain.Entities
         [Key]
         public int TransferId { get; set; }
         
-        [Required]
         public string SenderId { get; set; }
         [ForeignKey("SenderId")]
         public virtual User Sender { get; set; }
 
-        [Required]
         public string ReceiverId { get; set; }
         [ForeignKey("ReceiverId")]
         public virtual User Receiver { get; set; }

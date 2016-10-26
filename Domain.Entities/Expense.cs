@@ -25,7 +25,6 @@ namespace Domain.Entities
         [Required]
         public double Amount { get; set; }
 
-        [Required]
         public string UserPayingId { get; set; }
 
         [ForeignKey("UserPayingId")]
