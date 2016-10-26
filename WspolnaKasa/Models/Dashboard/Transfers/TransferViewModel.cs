@@ -31,5 +31,7 @@ namespace WspolnaKasa.Models.Dashboard
         [Display(ResourceType = typeof(Translations), Name = "Dashboard_Date")]
         [Required(ErrorMessage = null, ErrorMessageResourceType = typeof(Translations), ErrorMessageResourceName = "Dashboard_DateRequired")]
         public DateTime Date { get; set; }
+
+        public bool Editable { get; set; }
     }
 }

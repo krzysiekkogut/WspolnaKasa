@@ -171,10 +171,13 @@ function filterByGroup(groupId) {
 
 function transfersContainerInitialize() {
     $('#transfersContainer tr').click(function () {
-        $('#btnRemoveTransfer').removeClass('disabled');
-        $('#btnRemoveTransfer').removeAttr('disabled');
-        var selectedTransferId = $(this).find('input.transferId').val();
-        $('#selectedTransferId').val(selectedTransferId);
+        var editable = $(this).find('input.editable').val() == 'True';
+        if (editable) {
+            $('#btnRemoveTransfer').removeClass('disabled');
+            $('#btnRemoveTransfer').removeAttr('disabled');
+            var selectedTransferId = $(this).find('input.transferId').val();
+            $('#selectedTransferId').val(selectedTransferId);
+        }
     });
 
     $('#btnRemoveTransfer').click(function () {

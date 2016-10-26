@@ -123,7 +123,8 @@ namespace WspolnaKasa.Controllers
                                     Description = m.Description,
                                     UserFrom = m.Sender.DisplayName,
                                     UserTo = m.Receiver.DisplayName,
-                                    Group = m.Group.Name
+                                    Group = m.Group.Name,
+                                    Editable = User.Identity.GetUserId() == m.SenderId
                                 }));
             }
             else
@@ -139,7 +140,8 @@ namespace WspolnaKasa.Controllers
                                     Description = m.Description,
                                     UserFrom = m.Sender.DisplayName,
                                     UserTo = m.Receiver.DisplayName,
-                                    Group = m.Group.Name
+                                    Group = m.Group.Name,
+                                    Editable = User.Identity.GetUserId() == m.SenderId
                                 }));
             }
         }
