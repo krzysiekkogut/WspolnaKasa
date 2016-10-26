@@ -70,12 +70,12 @@ function groupsContainerInitialize() {
         $('#amountAddTransferModal').val(predefinedAmount);
         $('#addTransferModal').modal('show');
     });
-};
+}
 
 function expensesContainerInitialize() {
 
     $('#expensesContainer tr').click(function () {
-        var editable = $(this).find('input.editable').val() == 'True';
+        var editable = $(this).find('input.editable').val() === 'True';
         if (editable) {
             $('#expensesContainer tr').removeClass('active');
             $(this).addClass('active');
@@ -115,7 +115,7 @@ function expensesContainerInitialize() {
         var expenseId = $('#selectedExpenseId').val();
         $('#expenseIdRemoveModal').val(expenseId);
     });
-};
+}
 
 function modalsInitialize() {
 
@@ -127,7 +127,7 @@ function modalsInitialize() {
     $('#groupSelectEditModal').change(function () {
         loadGroupParticipantsToOptionList($(this).val(), '#participantsEditExpenseModal', true);
     });
-};
+}
 
 function loadGroupParticipantsToOptionList(groupId, optionListId, editMode) {
     if (groupId) {
@@ -142,7 +142,7 @@ function loadGroupParticipantsToOptionList(groupId, optionListId, editMode) {
             }
         });
     }
-};
+}
 
 function filterByGroup(groupId) {    
     $.ajax({
@@ -167,11 +167,11 @@ function filterByGroup(groupId) {
             $('#loadingIndicator').modal('hide');
         }
     });
-};
+}
 
 function transfersContainerInitialize() {
     $('#transfersContainer tr').click(function () {
-        var editable = $(this).find('input.editable').val() == 'True';
+        var editable = $(this).find('input.editable').val() === 'True';
         if (editable) {
             $('#btnRemoveTransfer').removeClass('disabled');
             $('#btnRemoveTransfer').removeAttr('disabled');
@@ -184,4 +184,4 @@ function transfersContainerInitialize() {
         var expenseId = $('#selectedTransferId').val();
         $('#transferIdRemoveModal').val(expenseId);
     });
-};
+}
