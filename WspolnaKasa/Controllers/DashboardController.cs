@@ -26,7 +26,8 @@ namespace WspolnaKasa.Controllers
         {
             var groups = _groupService
                 .GetAllGroups(User.Identity.GetUserId())
-                .Select(m => new GroupInListViewModel { GroupId = m.GroupId, Name = m.Name });
+                .Select(m => new GroupInListViewModel { GroupId = m.GroupId, Name = m.Name })
+                .OrderBy(g => g.Name);
             ViewBag.GroupId = new SelectList(groups, "GroupId", "Name");
             return View("Index");
         }
@@ -49,7 +50,9 @@ namespace WspolnaKasa.Controllers
                                 UserName = s.User.DisplayName
                             })
                             .Where(s => s.Amount != 0)
-                    }));
+                            .OrderBy(s => s.UserName)
+                    })
+                    .OrderBy(g => g.Name));
         }
 
         public PartialViewResult _SummarySidebar()
@@ -60,7 +63,8 @@ namespace WspolnaKasa.Controllers
                 {
                     Amount = Math.Round(s.Amount, 2),
                     UserName = s.User.DisplayName
-                });
+                })
+                .OrderBy(s => s.UserName);
             return PartialView(
                 new SummaryViewModel
                 {
@@ -112,7 +116,7 @@ namespace WspolnaKasa.Controllers
             {
                 return PartialView(
                             _transactionService
-                                .GetAllSentAndReceivedTransfers(User.Identity.GetUserId())
+                                .GetAllTransfers(User.Identity.GetUserId())
                                 .Select(m => new TransferViewModel
                                 {
                                     TransferId = m.TransferId,
@@ -129,7 +133,7 @@ namespace WspolnaKasa.Controllers
             {
                 return PartialView(
                             _transactionService
-                                .GetAllSentAndReceivedTransfers(User.Identity.GetUserId(), id)
+                                .GetAllTransfers(User.Identity.GetUserId(), id)
                                 .Select(m => new TransferViewModel
                                 {
                                     TransferId = m.TransferId,
@@ -146,14 +150,32 @@ namespace WspolnaKasa.Controllers
 
         public PartialViewResult _MembersSelectByGroup(int id)
         {
-            var groupMembers = _groupService.GetGroup(id).Members.Select(x => new GroupMemberViewModel { Id = x.Id, Name = x.DisplayName });
+            var groupMembers =
+                _groupService
+                    .GetGroup(id)
+                    .Members
+                    .Select(x => new GroupMemberViewModel
+                    {
+                        Id = x.Id,
+                        Name = x.DisplayName
+                    })
+                    .OrderBy(g => g.Name); ;
             return PartialView("_MembersSelect", groupMembers);
         }
 
         public PartialViewResult _MembersSelectByExpense(int id)
         {
             var expense = _transactionService.GetExpense(id);
-            var members = expense.Participants.Select(x => new GroupMemberViewModel { Id = x.Id, Name = x.DisplayName, Selected = true }).ToList();
+            var members = 
+                expense
+                    .Participants
+                    .Select(p => new GroupMemberViewModel
+                    {
+                        Id = p.Id,
+                        Name = p.DisplayName,
+                        Selected = true
+                    })
+                    .ToList();
             foreach (var member in expense.Group.Members)
             {
                 if (!members.Any(x => x.Id == member.Id))
@@ -161,6 +183,7 @@ namespace WspolnaKasa.Controllers
                     members.Add(new GroupMemberViewModel { Id = member.Id, Name = member.DisplayName, Selected = false });
                 }
             }
+            members = members.OrderBy(m => m.Name).ToList();
             return PartialView("_MembersSelect", members);
         }
 

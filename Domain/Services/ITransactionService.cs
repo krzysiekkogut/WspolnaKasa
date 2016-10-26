@@ -13,9 +13,9 @@ namespace Domain.Services
 
         IEnumerable<Expense> GetAllExpenses(string userId, int groupId);
 
-        IEnumerable<Transfer> GetAllSentAndReceivedTransfers(string userId);
+        IEnumerable<Transfer> GetAllTransfers(string userId);
 
-        IEnumerable<Transfer> GetAllSentAndReceivedTransfers(string userId, int groupId);
+        IEnumerable<Transfer> GetAllTransfers(string userId, int groupId);
 
         IEnumerable<Settlement> GetSummaryForUser(string userId);
 

@@ -33,15 +33,15 @@ namespace Domain.Services
             return GetAllExpenses(userId).Where(e => e.GroupId == groupId);
         }
 
-        public IEnumerable<Transfer> GetAllSentAndReceivedTransfers(string userId)
+        public IEnumerable<Transfer> GetAllTransfers(string userId)
         {
             var user = _unitOfWork.UsersRepository.Get(userId);
             return user.TransfersReceived.Union(user.TransfersSent).OrderByDescending(t => t.Date);
         }
 
-        public IEnumerable<Transfer> GetAllSentAndReceivedTransfers(string userId, int groupId)
+        public IEnumerable<Transfer> GetAllTransfers(string userId, int groupId)
         {
-            return GetAllSentAndReceivedTransfers(userId).Where(t => t.GroupId == groupId);
+            return GetAllTransfers(userId).Where(t => t.GroupId == groupId);
         }
 
         public IEnumerable<Settlement> GetSummaryForUser(string userId)

@@ -128,7 +128,7 @@ namespace Domain.Tests.Services
             _usersRepositoryMock.Setup(repo => repo.Get(userId)).Returns(user);
 
             // Act
-            var result = _transactionService.GetAllSentAndReceivedTransfers(userId);
+            var result = _transactionService.GetAllTransfers(userId);
 
             // Assert
             CollectionAssert.AreEquivalent(expectedTransfers.ToList(), result.ToList());
@@ -164,7 +164,7 @@ namespace Domain.Tests.Services
             _usersRepositoryMock.Setup(repo => repo.Get(userId)).Returns(user);
 
             // Act
-            var result = _transactionService.GetAllSentAndReceivedTransfers(userId, groupId);
+            var result = _transactionService.GetAllTransfers(userId, groupId);
 
             // Assert
             CollectionAssert.AreEquivalent(expectedTransfers.ToList(), result.ToList());
