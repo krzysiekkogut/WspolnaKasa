@@ -123,24 +123,6 @@
   <data name="AccountViewModels_RememberMe" xml:space="preserve">
     <value>Nie wylogowuj mnie.</value>
   </data>
-  <data name="Account_ExternalLoginConfirmation_RegisterLink" xml:space="preserve">
-    <value>Zarejestruj</value>
-  </data>
-  <data name="Account_ExternalLoginConfirmation_Text" xml:space="preserve">
-    <value>Pomyślnie zalogowano używając Twojego konta &lt;strong&gt;{0}&lt;/strong&gt;. Proszę podaj swój adres e-mail i kliknij przycisk {1}.</value>
-  </data>
-  <data name="Account_ExternalLoginConfirmation_Title" xml:space="preserve">
-    <value>Zarejestruj się</value>
-  </data>
-  <data name="Account_ExternalLoginFailure_Text" xml:space="preserve">
-    <value>Logowanie za pomocą zewnętrznejgo serwisu nie powiodło się.</value>
-  </data>
-  <data name="Account_ExternalLoginFailure_Title" xml:space="preserve">
-    <value>Logowanie nieudane</value>
-  </data>
-  <data name="Account_ExternalLoginsListPartial_LoginUsing" xml:space="preserve">
-    <value>Zaloguj przez</value>
-  </data>
   <data name="Account_Login_InvalidLoginAttempt" xml:space="preserve">
     <value>Błąd logowania. Upewnij się, że wprowadziłeś prawidłowe hasło.</value>
   </data>
@@ -377,24 +359,6 @@
   </data>
   <data name="Manage_Index_Title" xml:space="preserve">
     <value>Ustawienia profilu</value>
-  </data>
-  <data name="Manage_ManageLogins_Connect" xml:space="preserve">
-    <value>Połącz</value>
-  </data>
-  <data name="Manage_ManageLogins_RemoveLink" xml:space="preserve">
-    <value>Rozłącz</value>
-  </data>
-  <data name="Manage_ManageLogins_Title" xml:space="preserve">
-    <value>Powiązane konta</value>
-  </data>
-  <data name="Manage_SetPassword_Text" xml:space="preserve">
-    <value>Ustaw hasło, żeby nie musieć korzystać z logowania przez Facebooka.</value>
-  </data>
-  <data name="Manage_SetPassword_Title" xml:space="preserve">
-    <value>Ustaw hasło</value>
-  </data>
-  <data name="SetPassword_Button" xml:space="preserve">
-    <value>Ustaw</value>
   </data>
   <data name="Shared_Error_Text" xml:space="preserve">
     <value>Podczas przetwarzania żądania wystąpił błąd. Proszę spróbować ponownie poźniej.</value>

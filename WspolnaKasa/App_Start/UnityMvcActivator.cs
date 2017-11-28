@@ -1,31 +1,26 @@
 using System.Linq;
 using System.Web.Mvc;
-using Microsoft.Practices.Unity.Mvc;
+using Unity.AspNet.Mvc;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(WspolnaKasa.App_Start.UnityWebActivator), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(WspolnaKasa.App_Start.UnityWebActivator), "Shutdown")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(WspolnaKasa.UnityMvcActivator), nameof(WspolnaKasa.UnityMvcActivator.Start))]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(WspolnaKasa.UnityMvcActivator), nameof(WspolnaKasa.UnityMvcActivator.Shutdown))]
 
-namespace WspolnaKasa.App_Start
+namespace WspolnaKasa
 {
-    /// <summary>Provides the bootstrapping for integrating Unity with ASP.NET MVC.</summary>
-    public static class UnityWebActivator
+    public static class UnityMvcActivator
     {
-        /// <summary>Integrates Unity when the application starts.</summary>
+        
         public static void Start() 
         {
-            var container = UnityConfig.GetConfiguredContainer();
-
             FilterProviders.Providers.Remove(FilterProviders.Providers.OfType<FilterAttributeFilterProvider>().First());
-            FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(container));
+            FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(UnityConfig.Container));
 
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            DependencyResolver.SetResolver(new UnityDependencyResolver(UnityConfig.Container));
         }
 
-        /// <summary>Disposes the Unity container when the application is shut down.</summary>
         public static void Shutdown()
         {
-            var container = UnityConfig.GetConfiguredContainer();
-            container.Dispose();
+            UnityConfig.Container.Dispose();
         }
     }
 }

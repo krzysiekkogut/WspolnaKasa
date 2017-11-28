@@ -1,29 +1,29 @@
-using System;
-using System.Data.Entity;
-using System.Web;
 using DataAccessLayer;
+using Domain.Entities;
+using Domain.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
-using Microsoft.Practices.Unity;
-using Domain.Entities;
-using Domain.Services;
+using System;
+using System.Data.Entity;
+using System.Web;
+using Unity;
+using Unity.AspNet.Mvc;
+using Unity.Injection;
 
-namespace WspolnaKasa.App_Start
+namespace WspolnaKasa
 {
-    public class UnityConfig
+    public static class UnityConfig
     {
-        private static Lazy<IUnityContainer> container = new Lazy<IUnityContainer>(() =>
-        {
-            var container = new UnityContainer();
-            RegisterTypes(container);
-            return container;
-        });
+        private static Lazy<IUnityContainer> container =
+          new Lazy<IUnityContainer>(() =>
+          {
+              var container = new UnityContainer();
+              RegisterTypes(container);
+              return container;
+          });
 
-        public static IUnityContainer GetConfiguredContainer()
-        {
-            return container.Value;
-        }
+        public static IUnityContainer Container => container.Value;
 
         public static void RegisterTypes(IUnityContainer container)
         {
@@ -33,6 +33,6 @@ namespace WspolnaKasa.App_Start
             container.RegisterType<IUnitOfWork, UnitOfWork>();
             container.RegisterType<IGroupService, GroupService>();
             container.RegisterType<ITransactionService, TransactionService>();
-        }        
+        }
     }
 }

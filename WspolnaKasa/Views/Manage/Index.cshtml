@@ -3,8 +3,6 @@
     ViewBag.Title = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_Title;
     ViewBag.Password = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_Password;
     ViewBag.ChangePassword = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_ChangePassword;
-    ViewBag.SetPassword = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_SetPassword;
-    ViewBag.ManageExternalLogins = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_ManageExternalLogins;
     ViewBag.Change = WspolnaKasa.App_GlobalResources.Translations.Manage_Index_Change;
 }
 
@@ -20,14 +18,6 @@
             {
                 <a href="@Url.Action("ChangePassword")">@ViewBag.ChangePassword</a>
             }
-            else
-            {
-                <a href="@Url.Action("SetPassword")">@ViewBag.SetPassword</a>
-            }
-        </dd>
-        <dt>@Html.DisplayNameFor(x => x.Logins):</dt>
-        <dd>
-            <a href="@Url.Action("ManageLogins")">@ViewBag.ManageExternalLogins</a>
         </dd>
         <dt>@Html.DisplayNameFor(x => x.DisplayName):</dt>
         <dd>

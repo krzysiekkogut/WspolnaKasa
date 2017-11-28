@@ -61,10 +61,6 @@ namespace WspolnaKasa
 
             // Enable the application to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthOptions);
-
-            app.UseFacebookAuthentication(
-                appId: System.Configuration.ConfigurationManager.AppSettings["facebookAppId"],
-                appSecret: System.Configuration.ConfigurationManager.AppSettings["facebookAppSecret"]);
         }
     }
 }

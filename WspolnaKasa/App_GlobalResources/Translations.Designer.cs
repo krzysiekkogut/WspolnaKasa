@@ -19,7 +19,7 @@ namespace WspolnaKasa.App_GlobalResources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Translations {
@@ -57,60 +57,6 @@ namespace WspolnaKasa.App_GlobalResources {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Zarejestruj.
-        /// </summary>
-        public static string Account_ExternalLoginConfirmation_RegisterLink {
-            get {
-                return ResourceManager.GetString("Account_ExternalLoginConfirmation_RegisterLink", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pomyślnie zalogowano używając Twojego konta &lt;strong&gt;{0}&lt;/strong&gt;. Proszę podaj swój adres e-mail i kliknij przycisk {1}..
-        /// </summary>
-        public static string Account_ExternalLoginConfirmation_Text {
-            get {
-                return ResourceManager.GetString("Account_ExternalLoginConfirmation_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Zarejestruj się.
-        /// </summary>
-        public static string Account_ExternalLoginConfirmation_Title {
-            get {
-                return ResourceManager.GetString("Account_ExternalLoginConfirmation_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Logowanie za pomocą zewnętrznejgo serwisu nie powiodło się..
-        /// </summary>
-        public static string Account_ExternalLoginFailure_Text {
-            get {
-                return ResourceManager.GetString("Account_ExternalLoginFailure_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Logowanie nieudane.
-        /// </summary>
-        public static string Account_ExternalLoginFailure_Title {
-            get {
-                return ResourceManager.GetString("Account_ExternalLoginFailure_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Zaloguj przez.
-        /// </summary>
-        public static string Account_ExternalLoginsListPartial_LoginUsing {
-            get {
-                return ResourceManager.GetString("Account_ExternalLoginsListPartial_LoginUsing", resourceCulture);
             }
         }
         
@@ -826,51 +772,6 @@ namespace WspolnaKasa.App_GlobalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Połącz.
-        /// </summary>
-        public static string Manage_ManageLogins_Connect {
-            get {
-                return ResourceManager.GetString("Manage_ManageLogins_Connect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rozłącz.
-        /// </summary>
-        public static string Manage_ManageLogins_RemoveLink {
-            get {
-                return ResourceManager.GetString("Manage_ManageLogins_RemoveLink", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Powiązane konta.
-        /// </summary>
-        public static string Manage_ManageLogins_Title {
-            get {
-                return ResourceManager.GetString("Manage_ManageLogins_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ustaw hasło, żeby nie musieć korzystać z logowania przez Facebooka..
-        /// </summary>
-        public static string Manage_SetPassword_Text {
-            get {
-                return ResourceManager.GetString("Manage_SetPassword_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ustaw hasło.
-        /// </summary>
-        public static string Manage_SetPassword_Title {
-            get {
-                return ResourceManager.GetString("Manage_SetPassword_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Bieżące hasło.
         /// </summary>
         public static string ManageViewModels_CurrentPassword {
@@ -885,15 +786,6 @@ namespace WspolnaKasa.App_GlobalResources {
         public static string ManageViewModels_NewPassword {
             get {
                 return ResourceManager.GetString("ManageViewModels_NewPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ustaw.
-        /// </summary>
-        public static string SetPassword_Button {
-            get {
-                return ResourceManager.GetString("SetPassword_Button", resourceCulture);
             }
         }
         
